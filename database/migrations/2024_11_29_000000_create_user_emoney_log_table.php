@@ -29,6 +29,8 @@ return new class extends Migration
             $table->string('balance_currency')->nullable();
             $table->string('balance_currency_rate')->nullable();
 
+            $table->string('point')->nullable(); // 포인트
+
             $table->string('withdraw')->nullable(); // 출금
             $table->string('withdraw_currency')->nullable();
             $table->string('withdraw_currency_rate')->nullable();

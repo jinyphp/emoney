@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_emoney_withdraw', function (Blueprint $table) {
+        Schema::create('user_emoney_deposit', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
 
@@ -52,6 +52,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_emoney_withdraw');
+        Schema::dropIfExists('user_emoney_deposit');
     }
 };
