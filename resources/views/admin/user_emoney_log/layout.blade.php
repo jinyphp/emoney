@@ -30,15 +30,10 @@
             </div>
         </x-flex-between>
 
-        {{-- 테이블 --}}
-        {{-- @livewire('admin-table-none', [
-            'actions'=>$actions
-        ]) --}}
-        @livewire('table', [
-            'actions'=>$actions
+        {{-- 이머니 관리 --}}
+        @livewire('admin-user-emoney',[
+            'user_id'=>$id
         ])
-
-
 
 
     </x-theme-layout>

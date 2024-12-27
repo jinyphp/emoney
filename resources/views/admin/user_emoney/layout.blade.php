@@ -31,8 +31,11 @@
         </x-flex-between>
 
         {{-- 이머니 관리 --}}
-        @livewire('admin-user-emoney',[
+        {{-- @livewire('admin-user-emoney',[
             'user_id'=>$id
+        ]) --}}
+         @livewire('table-filter',[
+            'actions'=>$actions
         ])
 
 

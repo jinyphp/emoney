@@ -114,8 +114,16 @@ class AdminUserEmoney extends Component
 
         DB::table('user_emoney_log')->insert($this->forms);
 
+        // user_emoney 테이블 업데이트
+        user_emoney_deposit(
+            $this->forms['email'],
+            $this->forms['deposit']);
+
         $this->cancel();
     }
+
+
+
 
     /**
      * 출금
@@ -170,6 +178,11 @@ class AdminUserEmoney extends Component
         //$this->forms['type'] = 'withdraw';
 
         DB::table('user_emoney_log')->insert($this->forms);
+
+        // user_emoney 테이블 업데이트
+        user_emoney_withdraw(
+            $this->forms['email'],
+            $this->forms['withdraw']);
 
         $this->cancel();
     }

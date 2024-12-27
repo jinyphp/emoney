@@ -51,10 +51,21 @@
             <x-form-hor>
                 <x-form-label>통화</x-form-label>
                 <x-form-item>
-                    {!! xInputText()
+                    {{-- {!! xInputText()
                         ->setWire('model.defer',"forms.currency")
                         ->setWidth("standard")
-                    !!}
+                    !!} --}}
+                    <select class="form-control"
+                        wire:model="forms.currency"
+                        style="width: 400px;"
+                        placeholder="통화">
+                        <option value="">선택</option>
+                        @foreach (DB::table('auth_currency')->get() as $item)
+                            <option value="{{ $item->id }}:{{ $item->currency }}">
+                                {{ $item->currency }}
+                            </option>
+                        @endforeach
+                    </select>
                 </x-form-item>
             </x-form-hor>
 

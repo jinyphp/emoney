@@ -8,11 +8,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 
-/**
- * 회원 적립금 이력을 출력합니다.
- */
+
 use Jiny\WireTable\Http\Controllers\WireTablePopupForms;
-class AdminUserEmoneyLog extends WireTablePopupForms
+class AdminEmoney extends WireTablePopupForms
 {
     public function __construct()
     {
@@ -20,11 +18,14 @@ class AdminUserEmoneyLog extends WireTablePopupForms
         $this->setVisit($this);
 
         ## 테이블 정보
-        $this->actions['table']['name'] = "user_emoney_log";
+        //$this->actions['table']['name'] = "user_emoney";
 
-        $this->actions['view']['layout'] = "jiny-users-emoney::admin.user_emoney_log.layout";
-        $this->actions['view']['list'] = "jiny-users-emoney::admin.user_emoney_log.list";
-        $this->actions['view']['form'] = "jiny-users-emoney::admin.user_emoney_log.form";
+        $this->actions['view']['layout'] = "jiny-users-emoney::admin.emoney.layout";
+        // $this->actions['view']['list'] = "jiny-users-emoney::admin.user_emoney.list";
+        // $this->actions['view']['form'] = "jiny-users-emoney::admin.user_emoney.form";
+
+        // $this->actions['view']['filter']
+        //     = "jiny-users-emoney::admin.user_emoney.filter";
 
         $this->actions['title'] = "회원 적립금";
         $this->actions['subtitle'] = "판원 적립금 내역을 관리합니다.";
@@ -35,8 +36,7 @@ class AdminUserEmoneyLog extends WireTablePopupForms
 
     public function index(Request $request)
     {
-        $id = $request->id;
-        $this->params['id'] = $id;
+
 
         return parent::index($request);
     }

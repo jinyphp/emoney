@@ -17,8 +17,9 @@ return new class extends Migration
             $table->timestamps();
 
             //사용자
-            $table->string('email')->nullable();
             $table->string('user_id')->nullable();
+            $table->string('email')->nullable();
+            $table->string('name')->nullable();
 
             $table->string('currency')->nullable(); // 기준통화
             $table->string('balance')->nullable(); // 잔액

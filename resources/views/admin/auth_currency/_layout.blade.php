@@ -1,6 +1,5 @@
 <x-theme name="admin.sidebar">
     <x-theme-layout>
-
         <x-flex-between>
             <div class="page-title-box">
                 <x-flex class="align-items-center gap-2">
@@ -30,15 +29,13 @@
             </div>
         </x-flex-between>
 
-        {{-- 테이블 --}}
-        {{-- @livewire('admin-table-none', [
-            'actions'=>$actions
-        ]) --}}
-        @livewire('table', [
+        {{-- 테이블 : 검색 및 페이지네이션, 선택삭제, 생성 및 수정 --}}
+        @livewire('table-delete-create', [
             'actions'=>$actions
         ])
 
-
+        {{-- 팝업 --}}
+        @livewire('form-popup', ['actions'=>$actions])
 
 
     </x-theme-layout>

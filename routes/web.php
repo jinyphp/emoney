@@ -41,13 +41,23 @@ if(function_exists("isAdminPackage")) {
         $prefix = "admin";
     }
 
+
     ## 인증 Admin
     Route::middleware(['web','auth:sanctum', 'verified', 'admin'])
     ->name('admin.auth')
     ->prefix($prefix.'/auth')->group(function () {
 
+        Route::get('emoney',[
+            \Jiny\Users\Emoney\Http\Controllers\Admin\AdminEmoney::class,
+            "index"]);
+
+        // 회원 적립금 관리
+        Route::get('emoney/user',[
+            \Jiny\Users\Emoney\Http\Controllers\Admin\AdminUserEmoney::class,
+            "index"]);
+
         // 회원 적립금 내역
-        Route::get('emoney/{id?}',[
+        Route::get('emoney/log/{id?}',[
             \Jiny\Users\Emoney\Http\Controllers\Admin\AdminUserEmoneyLog::class,
             "index"])->where('id', '[0-9]+');
 

@@ -7,6 +7,7 @@
 
         <th width='100'>Swift</th>
         <th >은행</th>
+        <th width='200'>통화</th>
         <th width='200'>계좌</th>
         <th width='200'>예금주</th>
         <th width='200'>등록일자</th>
@@ -30,6 +31,9 @@
                     {{$item->bank}}
                 </td>
 
+                <td width='200'>
+                    {{$item->currency}}
+                </td>
                 <td width='200'>
                     {{$item->account}}
                 </td>

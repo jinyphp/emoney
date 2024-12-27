@@ -35,10 +35,11 @@
                 {!! xWireLink('이메일', "orderBy('email')") !!}
             </th>
             <th>설명</th>
-
+            <th width='100'>타입</th>
             <th width='100'>입금</th>
             <th width='100'>출금</th>
             <th width='100'>잔액</th>
+            <th width='100'>포인트</th>
             <th width='200'>생성일자</th>
         </thead>
         <tbody>
@@ -54,19 +55,37 @@
                     </td>
                     <td>
                         {{$item->description}}
+                        @if($item->trans)
+                        <div>
+                            <span class="text-muted">{{$item->trans}}</span>
+                            <span class="text-muted">({{$item->trans_id}})</span>
+                        </div>
+                        @endif
                     </td>
-
                     <td width='100'>
-                        <div>{{$item->deposit}}</div>
+                        {{$item->type}}
                     </td>
                     <td width='100'>
-                        <div>{{$item->withdraw}}</div>
+                        @if($item->deposit)
+                            {{$item->deposit}}
+                        @endif
+                    </td>
+                    <td width='100'>
+                        @if($item->withdraw)
+                            {{$item->withdraw}}
+                        @endif
                     </td>
 
                     <td width='100'>
                         <x-click wire:click="edit({{$item->id}})">
                             {{$item->balance}}
                         </x-click>
+                    </td>
+
+                    <td width='100'>
+                        @if($item->point)
+                            {{$item->point}}
+                        @endif
                     </td>
 
                     <td width='200'>

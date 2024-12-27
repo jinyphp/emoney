@@ -16,6 +16,19 @@
                 </x-form-item>
             </x-form-hor>
 
+            <x-form-hor>
+                <x-form-label>유형</x-form-label>
+                <x-form-item>
+                    <select class="form-control"
+                        style="width:453px;"
+                        wire:model.defer="forms.type">
+                        <option value="">선택</option>
+                        <option value="cash">현금</option>
+                        <option value="point">적립금</option>
+                    </select>
+                </x-form-item>
+            </x-form-hor>
+
             @if($mode == 'deposit')
             <x-form-hor>
                 <x-form-label>입금</x-form-label>
