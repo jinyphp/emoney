@@ -1,0 +1,106 @@
+{
+    "table": {
+        "name": "user_emoney",
+        "sort": {
+            "column": "created_at",
+            "order": "desc"
+        }
+    },
+    "storage": {},
+    "index": {
+        "title": "이머니 관리",
+        "subtitle": "사용자 전자지갑 목록",
+        "view": "jiny-auth-emoney::admin.emoney.index",
+        "route": "admin.auth.emoney.index",
+        "filter": {
+            "search": true,
+            "status": true
+        },
+        "pagination": {
+            "per_page": 20
+        },
+        "stats": {
+            "total_balance": true,
+            "total_points": true,
+            "active_wallets": true,
+            "total_wallets": true
+        }
+    },
+    "show": {
+        "title": "지갑 상세",
+        "subtitle": "지갑 정보 및 거래 내역",
+        "view": "jiny-auth-emoney::admin.emoney.show",
+        "route": "admin.auth.emoney.show"
+    },
+    "create": {
+        "title": "지갑 생성",
+        "subtitle": "새로운 지갑 추가",
+        "view": "jiny-auth-emoney::admin.emoney.create",
+        "route": "admin.auth.emoney.create"
+    },
+    "edit": {
+        "title": "지갑 수정",
+        "subtitle": "지갑 정보 수정",
+        "view": "jiny-auth-emoney::admin.emoney.edit",
+        "route": "admin.auth.emoney.edit"
+    },
+    "store": {
+        "route": "admin.auth.emoney.store",
+        "redirect": {
+            "success": "admin.auth.emoney.index",
+            "error": "admin.auth.emoney.create"
+        },
+        "validation": {
+            "user_id": "required|exists:users,id",
+            "balance": "required|numeric|min:0",
+            "points": "required|numeric|min:0",
+            "currency": "required|string|max:10",
+            "status": "required|in:active,inactive,suspended"
+        },
+        "messages": {
+            "success": "지갑이 성공적으로 생성되었습니다.",
+            "error": "지갑 생성에 실패했습니다."
+        }
+    },
+    "update": {
+        "route": "admin.auth.emoney.update",
+        "redirect": {
+            "success": "admin.auth.emoney.show",
+            "error": "admin.auth.emoney.edit"
+        },
+        "validation": {
+            "balance": "required|numeric|min:0",
+            "points": "required|numeric|min:0",
+            "currency": "required|string|max:10",
+            "status": "required|in:active,inactive,suspended"
+        },
+        "messages": {
+            "success": "지갑 정보가 성공적으로 업데이트되었습니다.",
+            "error": "지갑 정보 업데이트에 실패했습니다."
+        }
+    },
+    "delete": {
+        "title": "지갑 삭제",
+        "subtitle": "지갑 삭제 확인",
+        "route": "admin.auth.emoney.destroy",
+        "redirect": {
+            "success": "admin.auth.emoney.index"
+        },
+        "messages": {
+            "success": "지갑이 성공적으로 삭제되었습니다.",
+            "error": "지갑 삭제에 실패했습니다."
+        }
+    },
+    "deposits": {
+        "title": "입금 내역",
+        "subtitle": "이머니 입금 목록",
+        "view": "jiny-auth-emoney::admin.emoney.deposits",
+        "route": "admin.auth.emoney.deposits"
+    },
+    "withdrawals": {
+        "title": "출금 내역",
+        "subtitle": "이머니 출금 목록",
+        "view": "jiny-auth-emoney::admin.emoney.withdrawals",
+        "route": "admin.auth.emoney.withdrawals"
+    }
+}

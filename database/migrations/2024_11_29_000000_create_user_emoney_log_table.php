@@ -19,6 +19,8 @@ return new class extends Migration
             //사용자
             $table->string('email')->nullable();
             $table->string('user_id')->nullable();
+            $table->string('user_uuid', 36)->nullable()->index()->comment('User UUID for sharding');
+            $table->integer('shard_id')->nullable()->index()->comment('Shard number (0-15)');
 
             // 유형
             $table->string('type')->nullable();
