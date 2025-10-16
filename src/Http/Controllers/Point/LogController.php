@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\AuthEmoney\Http\Controllers\Point;
+namespace Jiny\Auth\Emoney\Http\Controllers\Point;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
@@ -103,7 +103,7 @@ class LogController extends Controller
             ],
         ];
 
-        return view('jiny-auth-emoney::point.log', [
+        return view('jiny-emoney::point.log', [
             'logs' => $logs,
             'statistics' => $statistics,
             'request' => $request,

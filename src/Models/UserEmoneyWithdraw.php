@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\AuthEmoney\Models;
+namespace Jiny\Auth\Emoney\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

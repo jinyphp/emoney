@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\AuthEmoney\Http\Controllers\Admin\AuthBank;
+namespace Jiny\Auth\Emoney\Http\Controllers\Admin\AuthBank;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
@@ -35,7 +35,7 @@ class CreateController extends Controller
             'PH' => '필리핀',
         ];
 
-        return view('jiny-auth-emoney::admin.auth-bank.create', [
+        return view('jiny-emoney::admin.auth-bank.create', [
             'countries' => $countries,
         ]);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\AuthEmoney\Http\Controllers\Emoney;
+namespace Jiny\Auth\Emoney\Http\Controllers\Emoney;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
@@ -86,7 +86,7 @@ class DepositController extends Controller
             'today_amount' => UserEmoneyDeposit::whereDate('created_at', today())->where('checked', '1')->sum('amount'),
         ];
 
-        return view('jiny-auth-emoney::emoney.deposit', [
+        return view('jiny-emoney::emoney.deposit', [
             'deposits' => $deposits,
             'statistics' => $statistics,
             'request' => $request,

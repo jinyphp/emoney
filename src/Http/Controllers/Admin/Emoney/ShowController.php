@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\AuthEmoney\Http\Controllers\Admin\Emoney;
+namespace Jiny\Auth\Emoney\Http\Controllers\Admin\Emoney;
 
 use Illuminate\Routing\Controller;
 
@@ -30,7 +30,7 @@ class ShowController extends Controller
         $showConfig = $jsonConfig['show'] ?? [];
 
         $this->config = [
-            'view' => $showConfig['view'] ?? 'jiny-auth-emoney::admin.emoney.show',
+            'view' => $showConfig['view'] ?? 'jiny-emoney::admin.emoney.show',
             'title' => $showConfig['title'] ?? '지갑 상세',
             'subtitle' => $showConfig['subtitle'] ?? '지갑 정보 및 거래 내역',
         ];

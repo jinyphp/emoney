@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\AuthEmoney\Http\Controllers\Admin\Emoney;
+namespace Jiny\Auth\Emoney\Http\Controllers\Admin\Emoney;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ class DepositsController extends Controller
         $depositsConfig = $jsonConfig['deposits'] ?? [];
 
         $this->config = [
-            'view' => $depositsConfig['view'] ?? 'jiny-auth-emoney::admin.emoney.deposits',
+            'view' => $depositsConfig['view'] ?? 'jiny-emoney::admin.emoney.deposits',
             'title' => $depositsConfig['title'] ?? '입금 내역',
             'subtitle' => $depositsConfig['subtitle'] ?? '이머니 입금 목록',
             'per_page' => 20,

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\AuthEmoney\Http\Controllers\Point;
+namespace Jiny\Auth\Emoney\Http\Controllers\Point;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
@@ -168,7 +168,7 @@ class StatsController extends Controller
         '))
         ->get();
 
-        return view('jiny-auth-emoney::point.stats', [
+        return view('jiny-emoney::point.stats', [
             'period' => $period,
             'overall_stats' => $overallStats,
             'period_stats' => $periodStats,

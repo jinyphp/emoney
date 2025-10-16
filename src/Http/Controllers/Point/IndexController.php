@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\AuthEmoney\Http\Controllers\Point;
+namespace Jiny\Auth\Emoney\Http\Controllers\Point;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
@@ -63,7 +63,7 @@ class IndexController extends Controller
                 ->get(),
         ];
 
-        return view('jiny-auth-emoney::point.index', [
+        return view('jiny-emoney::point.index', [
             'points' => $points,
             'statistics' => $statistics,
             'request' => $request,

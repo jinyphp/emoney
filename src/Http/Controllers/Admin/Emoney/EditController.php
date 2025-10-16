@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\AuthEmoney\Http\Controllers\Admin\Emoney;
+namespace Jiny\Auth\Emoney\Http\Controllers\Admin\Emoney;
 
 use Illuminate\Routing\Controller;
 
@@ -30,7 +30,7 @@ class EditController extends Controller
         $editConfig = $jsonConfig['edit'] ?? [];
 
         $this->config = [
-            'view' => $editConfig['view'] ?? 'jiny-auth-emoney::admin.emoney.edit',
+            'view' => $editConfig['view'] ?? 'jiny-emoney::admin.emoney.edit',
             'title' => $editConfig['title'] ?? '지갑 수정',
             'subtitle' => $editConfig['subtitle'] ?? '지갑 정보 수정',
         ];

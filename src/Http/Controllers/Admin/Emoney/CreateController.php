@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\AuthEmoney\Http\Controllers\Admin\Emoney;
+namespace Jiny\Auth\Emoney\Http\Controllers\Admin\Emoney;
 
 use Illuminate\Routing\Controller;
 
@@ -30,7 +30,7 @@ class CreateController extends Controller
         $createConfig = $jsonConfig['create'] ?? [];
 
         $this->config = [
-            'view' => $createConfig['view'] ?? 'jiny-auth-emoney::admin.emoney.create',
+            'view' => $createConfig['view'] ?? 'jiny-emoney::admin.emoney.create',
             'title' => $createConfig['title'] ?? '지갑 생성',
             'subtitle' => $createConfig['subtitle'] ?? '새로운 지갑 추가',
         ];

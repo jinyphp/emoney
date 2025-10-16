@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\AuthEmoney\Http\Controllers\Point;
+namespace Jiny\Auth\Emoney\Http\Controllers\Point;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
@@ -107,7 +107,7 @@ class ExpiryController extends Controller
                 ->get(),
         ];
 
-        return view('jiny-auth-emoney::point.expiry', [
+        return view('jiny-emoney::point.expiry', [
             'expiries' => $expiries,
             'statistics' => $statistics,
             'request' => $request,

@@ -1,6 +1,6 @@
 {
-    "name": "jiny/auth-emoney",
-    "description": "Authentication E-money and Point system for JinyPHP",
+    "name": "jiny/emoney",
+    "description": "E-money and Point system for JinyPHP",
     "keywords": [
         "jinyPHP",
         "framework",
@@ -24,8 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Jiny\\AuthEmoney\\": "src/",
-            "Jiny\\AuthEmoney\\Http\\Controllers\\": "Http/Controllers/"
+            "Jiny\\Auth\\Emoney\\": "src/"
         },
         "files" : [
             "Helpers/Helper.php"
@@ -33,13 +32,13 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Jiny\\AuthEmoney\\Tests\\": "tests/"
+            "Jiny\\Auth\\Emoney\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Jiny\\AuthEmoney\\JinyAuthEmoneyServiceProvider"
+                "Jiny\\Auth\\Emoney\\JinyAuthEmoneyServiceProvider"
             ]
         }
     }

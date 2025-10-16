@@ -10,7 +10,7 @@
     "index": {
         "title": "이머니 관리",
         "subtitle": "사용자 전자지갑 목록",
-        "view": "jiny-auth-emoney::admin.emoney.index",
+        "view": "jiny-emoney::admin.emoney.index",
         "route": "admin.auth.emoney.index",
         "filter": {
             "search": true,
@@ -29,19 +29,19 @@
     "show": {
         "title": "지갑 상세",
         "subtitle": "지갑 정보 및 거래 내역",
-        "view": "jiny-auth-emoney::admin.emoney.show",
+        "view": "jiny-emoney::admin.emoney.show",
         "route": "admin.auth.emoney.show"
     },
     "create": {
         "title": "지갑 생성",
         "subtitle": "새로운 지갑 추가",
-        "view": "jiny-auth-emoney::admin.emoney.create",
+        "view": "jiny-emoney::admin.emoney.create",
         "route": "admin.auth.emoney.create"
     },
     "edit": {
         "title": "지갑 수정",
         "subtitle": "지갑 정보 수정",
-        "view": "jiny-auth-emoney::admin.emoney.edit",
+        "view": "jiny-emoney::admin.emoney.edit",
         "route": "admin.auth.emoney.edit"
     },
     "store": {
@@ -94,13 +94,13 @@
     "deposits": {
         "title": "입금 내역",
         "subtitle": "이머니 입금 목록",
-        "view": "jiny-auth-emoney::admin.emoney.deposits",
+        "view": "jiny-emoney::admin.emoney.deposits",
         "route": "admin.auth.emoney.deposits"
     },
     "withdrawals": {
         "title": "출금 내역",
         "subtitle": "이머니 출금 목록",
-        "view": "jiny-auth-emoney::admin.emoney.withdrawals",
+        "view": "jiny-emoney::admin.emoney.withdrawals",
         "route": "admin.auth.emoney.withdrawals"
     }
 }

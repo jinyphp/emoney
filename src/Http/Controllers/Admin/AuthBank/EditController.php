@@ -1,10 +1,10 @@
 <?php
 
-namespace Jiny\AuthEmoney\Http\Controllers\Admin\AuthBank;
+namespace Jiny\Auth\Emoney\Http\Controllers\Admin\AuthBank;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use Jiny\AuthEmoney\Models\AuthBank;
+use Jiny\Auth\Emoney\Models\AuthBank;
 
 /**
  * 관리자 - 은행 수정 폼 컨트롤러
@@ -38,7 +38,7 @@ class EditController extends Controller
             'PH' => '필리핀',
         ];
 
-        return view('jiny-auth-emoney::admin.auth-bank.edit', [
+        return view('jiny-emoney::admin.auth-bank.edit', [
             'bank' => $bank,
             'countries' => $countries,
         ]);

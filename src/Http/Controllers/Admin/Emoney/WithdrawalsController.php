@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\AuthEmoney\Http\Controllers\Admin\Emoney;
+namespace Jiny\Auth\Emoney\Http\Controllers\Admin\Emoney;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ class WithdrawalsController extends Controller
         $withdrawalsConfig = $jsonConfig['withdrawals'] ?? [];
 
         $this->config = [
-            'view' => $withdrawalsConfig['view'] ?? 'jiny-auth-emoney::admin.emoney.withdrawals',
+            'view' => $withdrawalsConfig['view'] ?? 'jiny-emoney::admin.emoney.withdrawals',
             'title' => $withdrawalsConfig['title'] ?? '출금 내역',
             'subtitle' => $withdrawalsConfig['subtitle'] ?? '이머니 출금 목록',
             'per_page' => 20,

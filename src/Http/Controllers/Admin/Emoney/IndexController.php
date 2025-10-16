@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\AuthEmoney\Http\Controllers\Admin\Emoney;
+namespace Jiny\Auth\Emoney\Http\Controllers\Admin\Emoney;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ class IndexController extends Controller
         $indexConfig = $jsonConfig['index'] ?? [];
 
         $this->config = [
-            'view' => $indexConfig['view'] ?? 'jiny-auth-emoney::admin.emoney.index',
+            'view' => $indexConfig['view'] ?? 'jiny-emoney::admin.emoney.index',
             'title' => $indexConfig['title'] ?? '이머니 관리',
             'subtitle' => $indexConfig['subtitle'] ?? '사용자 전자지갑 목록',
             'per_page' => $indexConfig['pagination']['per_page'] ?? 20,

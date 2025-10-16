@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\AuthEmoney\Services;
+namespace Jiny\Auth\Emoney\Services;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
