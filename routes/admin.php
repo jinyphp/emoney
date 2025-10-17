@@ -27,15 +27,15 @@ Route::prefix('admin/auth/emoney')->middleware(['web', 'admin'])->name('admin.au
     Route::get('/deposits', \Jiny\Auth\Emoney\Http\Controllers\Admin\Emoney\DepositsController::class)->name('deposits');
     Route::get('/withdrawals', \Jiny\Auth\Emoney\Http\Controllers\Admin\Emoney\WithdrawalsController::class)->name('withdrawals');
 
-    // Bank 관리 라우트를 여기로 이동 (더 구체적인 라우트가 먼저 와야 함)
+    // EmoneyBank 관리 라우트 (Admin으로 이동됨)
     Route::prefix('bank')->name('bank.')->group(function () {
-        Route::get('/', \Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank\IndexController::class)->name('index');
-        Route::get('/create', \Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank\CreateController::class)->name('create');
-        Route::post('/', \Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank\StoreController::class)->name('store');
-        Route::get('/{id}', \Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank\ShowController::class)->name('show');
-        Route::get('/{id}/edit', \Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank\EditController::class)->name('edit');
-        Route::put('/{id}', \Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank\UpdateController::class)->name('update');
-        Route::delete('/{id}', \Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank\DestroyController::class)->name('destroy');
+        Route::get('/', \Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank\IndexController::class)->name('index');
+        Route::get('/create', \Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank\CreateController::class)->name('create');
+        Route::post('/', \Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank\StoreController::class)->name('store');
+        Route::get('/{id}', \Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank\ShowController::class)->name('show');
+        Route::get('/{id}/edit', \Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank\EditController::class)->name('edit');
+        Route::put('/{id}', \Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank\UpdateController::class)->name('update');
+        Route::delete('/{id}', \Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank\DestroyController::class)->name('destroy');
     });
 
     // 다른 이머니 관련 라우트들
@@ -51,8 +51,17 @@ Route::prefix('admin/auth/emoney')->middleware(['web', 'admin'])->name('admin.au
 
 // Auth-Emoney 포인트 관리 (Point Management)
 Route::prefix('admin/auth/point')->middleware(['web', 'admin'])->name('admin.auth.point.')->group(function () {
-    Route::get('/', \Jiny\Auth\Emoney\Http\Controllers\Point\IndexController::class)->name('index');
-    Route::get('/log', \Jiny\Auth\Emoney\Http\Controllers\Point\LogController::class)->name('log');
-    Route::get('/expiry', \Jiny\Auth\Emoney\Http\Controllers\Point\ExpiryController::class)->name('expiry');
-    Route::get('/stats', \Jiny\Auth\Emoney\Http\Controllers\Point\StatsController::class)->name('stats');
+    // CRUD 라우트
+    Route::get('/', \Jiny\Auth\Emoney\Http\Controllers\Admin\Point\IndexController::class)->name('index');
+    Route::get('/create', \Jiny\Auth\Emoney\Http\Controllers\Admin\Point\CreateController::class)->name('create');
+    Route::post('/', \Jiny\Auth\Emoney\Http\Controllers\Admin\Point\StoreController::class)->name('store');
+    Route::get('/{id}', \Jiny\Auth\Emoney\Http\Controllers\Admin\Point\ShowController::class)->name('show');
+    Route::get('/{id}/edit', \Jiny\Auth\Emoney\Http\Controllers\Admin\Point\EditController::class)->name('edit');
+    Route::put('/{id}', \Jiny\Auth\Emoney\Http\Controllers\Admin\Point\UpdateController::class)->name('update');
+    Route::delete('/{id}', \Jiny\Auth\Emoney\Http\Controllers\Admin\Point\DestroyController::class)->name('destroy');
+
+    // 관리 기능 라우트
+    Route::get('/log', \Jiny\Auth\Emoney\Http\Controllers\Admin\Point\LogController::class)->name('log');
+    Route::get('/expiry', \Jiny\Auth\Emoney\Http\Controllers\Admin\Point\ExpiryController::class)->name('expiry');
+    Route::get('/stats', \Jiny\Auth\Emoney\Http\Controllers\Admin\Point\StatsController::class)->name('stats');
 });

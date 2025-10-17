@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank;
+namespace Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class ShowController extends Controller
         // 계좌 활동 로그 (향후 구현 예정)
         $activityLogs = [];
 
-        return view('jiny-emoney::emoney.bank.show', [
+        return view('jiny-emoney::admin.emoney-bank.show', [
             'bank' => $bank,
             'otherBanks' => $otherBanks,
             'activityLogs' => $activityLogs,

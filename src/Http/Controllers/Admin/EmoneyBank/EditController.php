@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank;
+namespace Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
@@ -39,7 +39,7 @@ class EditController extends Controller
             'rejected' => '거부',
         ];
 
-        return view('jiny-emoney::emoney.bank.edit', [
+        return view('jiny-emoney::admin.emoney-bank.edit', [
             'bank' => $bank,
             'banks' => $banks,
             'currencies' => $currencies,

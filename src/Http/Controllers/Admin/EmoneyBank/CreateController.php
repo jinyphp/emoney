@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank;
+namespace Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
@@ -105,7 +105,7 @@ class CreateController extends Controller
             'CNY' => '위안화 (CNY)',
         ];
 
-        return view('jiny-emoney::emoney.bank.create', [
+        return view('jiny-emoney::admin.emoney-bank.create', [
             'users' => $users,
             'filters' => $filters,
             'banks' => $banks,
