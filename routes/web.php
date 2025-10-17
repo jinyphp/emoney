@@ -16,12 +16,12 @@ Route::middleware(['web', 'auth'])->prefix('emoney')->name('emoney.')->group(fun
 
     // 은행 계좌 관리
     Route::prefix('bank')->name('bank.')->group(function () {
-        Route::get('/', \Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank\IndexController::class)->name('index');
-        Route::get('/create', \Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank\CreateController::class)->name('create');
-        Route::post('/', \Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank\StoreController::class)->name('store');
-        Route::get('/{id}', \Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank\ShowController::class)->name('show');
-        Route::get('/{id}/edit', \Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank\EditController::class)->name('edit');
-        Route::put('/{id}', \Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank\UpdateController::class)->name('update');
-        Route::delete('/{id}', \Jiny\Auth\Emoney\Http\Controllers\Emoney\Bank\DestroyController::class)->name('destroy');
+        Route::get('/', \Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank\IndexController::class)->name('index');
+        Route::get('/create', \Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank\CreateController::class)->name('create');
+        Route::post('/', \Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank\StoreController::class)->name('store');
+        Route::get('/{id}', \Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank\ShowController::class)->name('show');
+        Route::get('/{id}/edit', \Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank\EditController::class)->name('edit');
+        Route::put('/{id}', \Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank\UpdateController::class)->name('update');
+        Route::delete('/{id}', \Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank\DestroyController::class)->name('destroy');
     });
 });
