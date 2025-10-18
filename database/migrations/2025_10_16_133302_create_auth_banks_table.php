@@ -12,6 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // 테이블이 이미 존재하면 스킵
+        if (Schema::hasTable('auth_banks')) {
+            return;
+        }
+
         Schema::create('auth_banks', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique()->comment('은행명');

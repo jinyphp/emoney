@@ -55,7 +55,7 @@ return new class extends Migration
             ['name' => '하나은행', 'code' => 'HN', 'country' => 'KR', 'swift_code' => 'HNBNKRSE', 'website' => 'https://www.kebhana.com', 'phone' => '1599-1111', 'sort_order' => 4],
             ['name' => '기업은행', 'code' => 'IBK', 'country' => 'KR', 'swift_code' => 'IBKOKRSE', 'website' => 'https://www.ibk.co.kr', 'phone' => '1566-2566', 'sort_order' => 5],
             ['name' => 'NH농협은행', 'code' => 'NH', 'country' => 'KR', 'swift_code' => 'NACFKRSE', 'website' => 'https://banking.nonghyup.com', 'phone' => '1588-2100', 'sort_order' => 6],
-            ['name' => '수협은행', 'code' => 'SH', 'country' => 'KR', 'swift_code' => 'SHFCKRSE', 'website' => 'https://www.suhyup-bank.com', 'phone' => '1588-1515', 'sort_order' => 7],
+            ['name' => '수협은행', 'code' => 'SUHYUP', 'country' => 'KR', 'swift_code' => 'SHFCKRSE', 'website' => 'https://www.suhyup-bank.com', 'phone' => '1588-1515', 'sort_order' => 7],
             ['name' => 'SC제일은행', 'code' => 'SC', 'country' => 'KR', 'swift_code' => 'SCBLKRSE', 'website' => 'https://www.scfirstbank.com', 'phone' => '1588-1599', 'sort_order' => 8],
             ['name' => '시티은행', 'code' => 'CITI', 'country' => 'KR', 'swift_code' => 'CITIKRSE', 'website' => 'https://www.citibank.co.kr', 'phone' => '1588-2588', 'sort_order' => 9],
             ['name' => '경남은행', 'code' => 'KNB', 'country' => 'KR', 'swift_code' => 'KYNBKRSE', 'website' => 'https://www.knbank.co.kr', 'phone' => '1588-0505', 'sort_order' => 10],
@@ -72,7 +72,7 @@ return new class extends Migration
             ['name' => 'Bank of America', 'code' => 'BOA', 'country' => 'US', 'swift_code' => 'BOFAUS3N', 'website' => 'https://www.bankofamerica.com', 'phone' => '+1-800-432-1000', 'sort_order' => 101],
             ['name' => 'JPMorgan Chase', 'code' => 'CHASE', 'country' => 'US', 'swift_code' => 'CHASUS33', 'website' => 'https://www.chase.com', 'phone' => '+1-800-935-9935', 'sort_order' => 102],
             ['name' => 'Wells Fargo', 'code' => 'WF', 'country' => 'US', 'swift_code' => 'WFBIUS6S', 'website' => 'https://www.wellsfargo.com', 'phone' => '+1-800-869-3557', 'sort_order' => 103],
-            ['name' => 'Citibank', 'code' => 'CITI', 'country' => 'US', 'swift_code' => 'CITIUS33', 'website' => 'https://www.citibank.com', 'phone' => '+1-800-374-9700', 'sort_order' => 104],
+            ['name' => 'Citibank', 'code' => 'CITI_US', 'country' => 'US', 'swift_code' => 'CITIUS33', 'website' => 'https://www.citibank.com', 'phone' => '+1-800-374-9700', 'sort_order' => 104],
 
             // 일본 은행들
             ['name' => 'MUFG Bank', 'code' => 'MUFG', 'country' => 'JP', 'swift_code' => 'BOTKJPJT', 'website' => 'https://www.bk.mufg.jp', 'phone' => '+81-3-3240-1111', 'sort_order' => 201],
