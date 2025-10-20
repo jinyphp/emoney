@@ -1,10 +1,10 @@
 <?php
 
-namespace Jiny\Auth\Emoney\Http\Controllers\Admin\Emoney;
+namespace Jiny\Emoney\Http\Controllers\Admin\Emoney;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use Jiny\AuthEmoney\Models\UserEmoney;
+use Jiny\Emoney\Models\UserEmoney;
 
 /**
  * 관리자 - 이머니 목록 컨트롤러
@@ -43,6 +43,14 @@ class IndexController extends Controller
 
     /**
      * 이머니 목록 표시
+     */
+    public function index(Request $request)
+    {
+        return $this->__invoke($request);
+    }
+
+    /**
+     * 이머니 목록 표시 (__invoke 메서드)
      */
     public function __invoke(Request $request)
     {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank;
+namespace Jiny\Emoney\Http\Controllers\Admin\EmoneyBank;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Jiny\AuthEmoney\Models\UserEmoneyBank;
+use Jiny\Emoney\Models\UserEmoneyBank;
 use App\Models\User;
 
 /**

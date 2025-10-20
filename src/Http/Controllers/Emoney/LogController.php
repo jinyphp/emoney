@@ -1,11 +1,11 @@
 <?php
 
-namespace Jiny\Auth\Emoney\Http\Controllers\Emoney;
+namespace Jiny\Emoney\Http\Controllers\Emoney;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Jiny\AuthEmoney\Models\UserEmoneyLog;
+use Jiny\Emoney\Models\UserEmoneyLog;
 
 /**
  * 관리자 - 사용자 이머니 거래 로그 관리 컨트롤러

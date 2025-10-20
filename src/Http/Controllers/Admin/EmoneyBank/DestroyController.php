@@ -1,10 +1,10 @@
 <?php
 
-namespace Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank;
+namespace Jiny\Emoney\Http\Controllers\Admin\EmoneyBank;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use Jiny\AuthEmoney\Models\UserEmoneyBank;
+use Jiny\Emoney\Models\UserEmoneyBank;
 
 /**
  * 관리자 - 사용자 은행 계좌 삭제 컨트롤러

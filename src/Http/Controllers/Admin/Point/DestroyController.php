@@ -1,13 +1,13 @@
 <?php
 
-namespace Jiny\Auth\Emoney\Http\Controllers\Admin\Point;
+namespace Jiny\Emoney\Http\Controllers\Admin\Point;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Jiny\Auth\Emoney\Models\UserPoint;
-use Jiny\Auth\Emoney\Models\UserPointLog;
-use Jiny\Auth\Emoney\Models\UserPointExpiry;
+use Jiny\Emoney\Models\UserPoint;
+use Jiny\Emoney\Models\UserPointLog;
+use Jiny\Emoney\Models\UserPointExpiry;
 
 /**
  * 관리자 - 사용자 포인트 계정 삭제 컨트롤러

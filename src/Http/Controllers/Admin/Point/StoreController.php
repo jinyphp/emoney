@@ -1,11 +1,11 @@
 <?php
 
-namespace Jiny\Auth\Emoney\Http\Controllers\Admin\Point;
+namespace Jiny\Emoney\Http\Controllers\Admin\Point;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Jiny\Auth\Emoney\Models\UserPoint;
+use Jiny\Emoney\Models\UserPoint;
 use App\Models\User;
 
 /**

@@ -1,11 +1,11 @@
 <?php
 
-namespace Jiny\Auth\Emoney\Http\Controllers\Admin\AuthBank;
+namespace Jiny\Emoney\Http\Controllers\Admin\AuthBank;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Jiny\Auth\Emoney\Models\AuthBank;
+use Jiny\Emoney\Models\AuthBank;
 
 /**
  * 관리자 - 은행 저장 컨트롤러

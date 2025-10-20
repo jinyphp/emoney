@@ -1,12 +1,12 @@
 <?php
 
-namespace Jiny\Auth\Emoney\Http\Controllers\Admin\EmoneyBank;
+namespace Jiny\Emoney\Http\Controllers\Admin\EmoneyBank;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
-use Jiny\Auth\Emoney\Models\AuthBank;
+use Jiny\Emoney\Models\AuthBank;
 
 /**
  * 관리자 - 사용자 은행 계좌 생성 폼 컨트롤러

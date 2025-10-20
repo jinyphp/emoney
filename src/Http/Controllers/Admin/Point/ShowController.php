@@ -1,11 +1,11 @@
 <?php
 
-namespace Jiny\Auth\Emoney\Http\Controllers\Admin\Point;
+namespace Jiny\Emoney\Http\Controllers\Admin\Point;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use Jiny\Auth\Emoney\Models\UserPoint;
-use Jiny\Auth\Emoney\Models\UserPointLog;
+use Jiny\Emoney\Models\UserPoint;
+use Jiny\Emoney\Models\UserPointLog;
 
 /**
  * 관리자 - 사용자 포인트 상세 보기 컨트롤러

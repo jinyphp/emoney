@@ -1,6 +1,6 @@
 <?php
 
-namespace Jiny\Auth\Emoney\Http\Controllers\Admin\Emoney;
+namespace Jiny\Emoney\Http\Controllers\Admin\Emoney;
 
 use Illuminate\Routing\Controller;
 

@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Jiny\\Auth\\Emoney\\": "src/"
+            "Jiny\\Emoney\\": "src/"
         },
         "files" : [
             "Helpers/Helper.php"
@@ -32,13 +32,13 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Jiny\\Auth\\Emoney\\Tests\\": "tests/"
+            "Jiny\\Emoney\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Jiny\\Auth\\Emoney\\JinyAuthEmoneyServiceProvider"
+                "Jiny\\Emoney\\JinyEmoneyServiceProvider"
             ]
         }
     }

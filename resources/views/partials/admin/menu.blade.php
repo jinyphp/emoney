@@ -28,17 +28,17 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.auth.emoney.deposit') }}">
+                            <a class="nav-link" href="{{ route('admin.auth.emoney.deposits') }}">
                                 <i class="fe fe-arrow-down-circle me-2"></i>입금 내역
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.auth.emoney.withdraw') }}">
+                            <a class="nav-link" href="{{ route('admin.auth.emoney.withdrawals') }}">
                                 <i class="fe fe-arrow-up-circle me-2"></i>출금 내역
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.auth.emoney.log') }}">
+                            <a class="nav-link" href="{{ route('admin.auth.emoney.index') }}">
                                 <i class="fe fe-list me-2"></i>거래 로그
                             </a>
                         </li>

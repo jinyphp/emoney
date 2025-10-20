@@ -1,10 +1,10 @@
 <?php
 
-namespace Jiny\Auth\Emoney\Http\Controllers\Admin\Emoney;
+namespace Jiny\Emoney\Http\Controllers\Admin\Emoney;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use Jiny\AuthEmoney\Models\UserEmoneyWithdraw;
+use Jiny\Emoney\Models\UserEmoneyWithdraw;
 
 /**
  * 관리자 - 이머니 출금 목록 컨트롤러
