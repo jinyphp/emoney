@@ -122,8 +122,16 @@ class IndexController extends Controller
                 return $this->getDefaultSettings();
             }
 
-            // 기본값과 병합
-            return array_merge_recursive($this->getDefaultSettings(), $settings);
+            // 기본값과 병합 (recursive 대신 단순 merge 사용)
+            $defaultSettings = $this->getDefaultSettings();
+
+            // 각 섹션별로 병합
+            $mergedSettings = [];
+            foreach ($defaultSettings as $section => $defaults) {
+                $mergedSettings[$section] = array_merge($defaults, $settings[$section] ?? []);
+            }
+
+            return $mergedSettings;
 
         } catch (\Exception $e) {
             \Log::error('Setting file load error', [

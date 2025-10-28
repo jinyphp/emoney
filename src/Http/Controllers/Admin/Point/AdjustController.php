@@ -9,6 +9,32 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  * 관리자 - 포인트 조정 컨트롤러
+ *
+ * [메소드 호출 관계 트리]
+ * AdjustController
+ * └── __invoke(Request $request)
+ *     ├── $request->validate() - 입력값 유효성 검사
+ *     ├── DB::beginTransaction() - 트랜잭션 시작
+ *     ├── DB::table('user_point')->lockForUpdate() - 포인트 레코드 잠금
+ *     ├── 포인트 잔액 업데이트 (증가/감소)
+ *     ├── DB::table('user_point_log')->insert() - 조정 로그 기록
+ *     ├── DB::commit() - 트랜잭션 커밋
+ *     └── response()->json() - AJAX 응답 반환
+ *
+ * [컨트롤러 역할]
+ * - 관리자에 의한 수동 포인트 조정
+ * - 포인트 지급/차감 처리
+ * - 조정 사유 및 관리자 정보 기록
+ * - AJAX API로 실시간 처리
+ *
+ * [트랜잭션 안전성]
+ * - 동시성 제어를 위한 레코드 잠금
+ * - 포인트 잔액 음수 방지
+ * - 조정 내역 로그 보장
+ *
+ * [라우트 연결]
+ * Route: POST /admin/auth/point/adjust
+ * Name: admin.auth.point.adjust
  */
 class AdjustController extends Controller
 {

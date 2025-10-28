@@ -8,6 +8,39 @@ use Jiny\Emoney\Models\AuthBank;
 
 /**
  * 관리자 - 은행 목록 컨트롤러
+ *
+ * [메소드 호출 관계 트리]
+ * IndexController
+ * └── __invoke(Request $request)
+ *     ├── AuthBank::query() - 쿼리 빌더 생성
+ *     ├── $query->search($search) - 검색 필터 적용
+ *     ├── $query->byCountry($country) - 국가별 필터 적용
+ *     ├── $query->where('enable', boolean) - 상태 필터 적용
+ *     ├── $query->ordered() - 정렬 순서 적용
+ *     ├── $query->orderBy($sortBy, $sortOrder) - 커스텀 정렬 적용
+ *     ├── $query->paginate($perPage) - 페이지네이션 적용
+ *     ├── AuthBank::count() - 전체 개수 집계
+ *     ├── AuthBank::where('enable', true)->count() - 활성 은행 개수
+ *     ├── AuthBank::where('enable', false)->count() - 비활성 은행 개수
+ *     ├── AuthBank::distinct()->count('country') - 국가 개수
+ *     ├── AuthBank::getCountryStats() - 국가별 통계
+ *     ├── AuthBank::select('country')->distinct()->orderBy('country')->pluck('country') - 국가 목록
+ *     └── view('jiny-emoney::admin.auth-bank.index', $data) - 뷰 렌더링
+ *
+ * [컨트롤러 역할]
+ * - 관리자용 은행 목록 페이지를 담당
+ * - 검색, 필터링, 정렬, 페이지네이션 기능 제공
+ * - 은행 통계 정보 및 국가별 분류 제공
+ *
+ * [라우트 연결]
+ * Route: GET /admin/auth/bank
+ * Name: admin.auth.bank.index
+ *
+ * [관련 컨트롤러]
+ * - CreateController: 새 은행 생성 폼
+ * - ShowController: 은행 상세 보기
+ * - EditController: 은행 수정 폼
+ * - ExportController: 은행 목록 내보내기
  */
 class IndexController extends Controller
 {

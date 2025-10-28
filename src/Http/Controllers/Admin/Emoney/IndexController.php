@@ -8,6 +8,40 @@ use Jiny\Emoney\Models\UserEmoney;
 
 /**
  * 관리자 - 이머니 목록 컨트롤러
+ *
+ * [메소드 호출 관계 트리]
+ * IndexController
+ * ├── __construct()
+ * │   └── loadConfig() - JSON 설정 파일 로드
+ * ├── index(Request $request)
+ * │   └── __invoke($request) - 실제 처리 메소드 호출
+ * └── __invoke(Request $request)
+ *     ├── UserEmoney::with('user') - 사용자 관계 포함 쿼리
+ *     ├── 필터링 적용
+ *     │   ├── 검색 필터: email, name, user_id
+ *     │   └── 상태 필터: status
+ *     ├── $query->orderBy($sortBy, $sortOrder) - 정렬 적용
+ *     ├── $query->paginate($perPage) - 페이지네이션
+ *     ├── 통계 계산
+ *     │   ├── UserEmoney::sum('balance') - 총 잔액
+ *     │   ├── UserEmoney::sum('point') - 총 포인트
+ *     │   └── UserEmoney::count() - 지갑 개수
+ *     └── view($this->config['view'], $data) - 뷰 렌더링
+ *
+ * [컨트롤러 역할]
+ * - 관리자용 이머니 지갑 목록 페이지
+ * - JSON 설정 파일 기반 동적 구성
+ * - 사용자 정보와 함께 이머니 지갑 정보 표시
+ * - 검색, 필터링, 정렬, 페이지네이션 기능
+ * - 이머니 전체 통계 정보 제공
+ *
+ * [설정 기반 구성]
+ * - Emoney.json 파일에서 뷰, 제목, 페이지네이션 등 설정 로드
+ * - 동적 설정으로 유연한 관리 인터페이스 제공
+ *
+ * [라우트 연결]
+ * Route: GET /admin/auth/emoney
+ * Name: admin.auth.emoney.index
  */
 class IndexController extends Controller
 {

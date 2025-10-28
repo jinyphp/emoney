@@ -11,7 +11,7 @@
                 <div>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.auth.point.expiry') }}">포인트 만료 관리</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.auth.point.expiry.index') }}">포인트 만료 관리</a></li>
                             <li class="breadcrumb-item active" aria-current="page">상세보기</li>
                         </ol>
                     </nav>
@@ -19,7 +19,7 @@
                     <p class="text-muted mb-0">만료 스케줄 #{{ $expiry->id }}</p>
                 </div>
                 <div>
-                    <a href="{{ route('admin.auth.point.expiry') }}" class="btn btn-outline-secondary">
+                    <a href="{{ route('admin.auth.point.expiry.index') }}" class="btn btn-outline-secondary">
                         <i class="fe fe-arrow-left me-2"></i>목록으로
                     </a>
                     @if(!$expiry->expired)

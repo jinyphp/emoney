@@ -9,6 +9,45 @@ use Jiny\Auth\Facades\Shard;
 
 /**
  * 관리자 - 충전 신청 거부
+ *
+ * [메소드 호출 관계 트리]
+ * RejectController
+ * ├── __invoke(Request $request, int $depositId)
+ * │   ├── DB::beginTransaction() - 트랜잭션 시작
+ * │   ├── 충전 신청 검증
+ * │   │   ├── DB::table('user_emoney_deposits')->where()->first() - 충전 신청 조회
+ * │   │   └── 상태 및 존재 여부 확인 (pending 상태만 처리)
+ * │   ├── 충전 신청 상태 업데이트
+ * │   │   └── DB::table('user_emoney_deposits')->update() - 거부 상태로 변경
+ * │   ├── sendRejectionNotification($deposit, $adminMemo) - 거부 알림 발송
+ * │   ├── DB::commit() - 트랜잭션 커밋
+ * │   └── redirect()->route('admin.auth.emoney.deposits.index') - 성공 리다이렉트
+ * └── sendRejectionNotification($deposit, $adminMemo)
+ *     ├── Shard::getUserByUuid($deposit->user_uuid) - 사용자 정보 조회
+ *     ├── 거부 알림 메시지 생성
+ *     ├── JSON 데이터 구성
+ *     └── DB::table('user_notifications')->insert() - 알림 저장
+ *
+ * [컨트롤러 역할]
+ * - 대기 중인 충전 신청을 거부 처리
+ * - 이머니 잔액 변경 없이 상태만 rejected로 변경
+ * - 거부 사유를 관리자 메모로 기록
+ * - 사용자에게 거부 완료 알림 발송
+ *
+ * [ApproveController와의 차이점]
+ * - 이머니 잔액 업데이트 없음
+ * - 거래 로그 기록 없음
+ * - 상태만 rejected로 변경
+ * - 거부 사유와 함께 알림 발송
+ *
+ * [라우트 연결]
+ * Route: POST /admin/auth/emoney/deposits/{id}/reject
+ * Name: admin.auth.emoney.deposits.reject
+ *
+ * [관련 컨트롤러]
+ * - IndexController: 거부 완료 후 목록으로 리다이렉트
+ * - ApproveController: 승인 처리 (대안 액션)
+ * - ShowController: 상세보기에서 거부 버튼 클릭
  */
 class RejectController extends Controller
 {

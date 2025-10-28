@@ -9,6 +9,47 @@ use Jiny\Emoney\Models\AuthBank;
 
 /**
  * 관리자 - 은행 업데이트 컨트롤러
+ *
+ * [메소드 호출 관계 트리]
+ * UpdateController
+ * └── __invoke(Request $request, $id)
+ *     ├── AuthBank::findOrFail($id) - 업데이트할 은행 레코드 조회
+ *     ├── Validator::make($request->all(), $rules, $messages) - 유효성 검사 실행
+ *     ├── $validator->fails() - 유효성 검사 실패 확인
+ *     ├── redirect()->back()->withErrors($validator)->withInput() - 실패 시 리다이렉트
+ *     ├── $bank->update($data) - 기존 레코드 업데이트
+ *     └── redirect()->route('admin.auth.bank.show', $bank->id)->with('success', $message) - 성공 시 리다이렉트
+ *
+ * [컨트롤러 역할]
+ * - EditController에서 전송된 은행 수정 폼 데이터를 처리
+ * - 기존 은행 레코드의 업데이트 수행
+ * - StoreController와 유사하지만 기존 레코드 제외하고 중복 검사
+ * - 성공 시 해당 은행의 상세보기 페이지로 리다이렉트
+ *
+ * [유효성 검사 규칙]
+ * - name: 필수, 최대 255자, 고유값 (현재 레코드 제외)
+ * - code: 선택, 최대 10자, 고유값 (현재 레코드 제외)
+ * - country: 필수, 정확히 2자 (ISO 국가 코드)
+ * - swift_code: 선택, 최대 11자
+ * - website: 선택, 유효한 URL, 최대 255자
+ * - phone: 선택, 최대 50자
+ * - account_number: 선택, 최대 50자
+ * - account_holder: 선택, 최대 100자
+ * - description: 선택, 최대 1000자
+ * - enable: 불린값
+ * - sort_order: 정수, 0-9999 범위 (기본값: 기존 값 유지)
+ *
+ * [라우트 연결]
+ * Route: PUT /admin/auth/bank/{id}
+ * Name: admin.auth.bank.update
+ *
+ * [관련 컨트롤러]
+ * - EditController: 수정 폼 제공
+ * - ShowController: 업데이트 완료 후 상세보기로 리다이렉트
+ *
+ * [예외 처리]
+ * - findOrFail() 사용으로 존재하지 않는 ID는 자동으로 404 처리
+ * - 업데이트 과정에서 발생하는 예외는 catch로 처리
  */
 class UpdateController extends Controller
 {

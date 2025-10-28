@@ -9,6 +9,27 @@ use Jiny\Auth\Facades\Shard;
 
 /**
  * 관리자 - 충전 신청 삭제
+ *
+ * [메소드 호출 관계 트리]
+ * DeleteController
+ * └── __invoke(Request $request, $depositId)
+ *     ├── DB::table('user_emoney_deposits')->where('id', $depositId)->first() - 충전 신청 조회
+ *     ├── 삭제 가능 여부 확인 (pending 상태만 삭제 가능)
+ *     ├── DB::table('user_emoney_deposits')->where('id', $depositId)->delete() - 레코드 삭제
+ *     └── redirect()->route('admin.auth.emoney.deposits.index') - 목록으로 리다이렉트
+ *
+ * [컨트롤러 역할]
+ * - 대기 중인 충전 신청만 삭제 처리
+ * - 승인/거부된 신청은 삭제 불가
+ * - 완전한 데이터 삭제 (복구 불가)
+ *
+ * [보안 고려사항]
+ * - pending 상태만 삭제 허용
+ * - 처리된 신청은 보존 (감사 추적용)
+ *
+ * [라우트 연결]
+ * Route: DELETE /admin/auth/emoney/deposits/{id}
+ * Name: admin.auth.emoney.deposits.delete
  */
 class DeleteController extends Controller
 {

@@ -9,6 +9,44 @@ use Jiny\Emoney\Models\AuthBank;
 
 /**
  * 관리자 - 은행 저장 컨트롤러
+ *
+ * [메소드 호출 관계 트리]
+ * StoreController
+ * └── __invoke(Request $request)
+ *     ├── Validator::make($request->all(), $rules, $messages) - 유효성 검사 실행
+ *     ├── $validator->fails() - 유효성 검사 실패 확인
+ *     ├── redirect()->back()->withErrors($validator)->withInput() - 실패 시 리다이렉트
+ *     ├── AuthBank::where('country', $country)->max('sort_order') - 최대 정렬 순서 조회
+ *     ├── AuthBank::create($data) - 새 은행 데이터 생성
+ *     └── redirect()->route('admin.auth.bank.index')->with('success', $message) - 성공 시 리다이렉트
+ *
+ * [컨트롤러 역할]
+ * - CreateController에서 전송된 은행 생성 폼 데이터를 처리
+ * - 입력 데이터의 유효성 검사 및 중복 확인
+ * - 정렬 순서 자동 설정 (비어있을 경우)
+ * - 새로운 AuthBank 모델 인스턴스 생성 및 저장
+ * - 성공/실패에 따른 적절한 리다이렉트 및 메시지 처리
+ *
+ * [유효성 검사 규칙]
+ * - name: 필수, 최대 255자, 고유값
+ * - code: 선택, 최대 10자, 고유값
+ * - country: 필수, 정확히 2자 (ISO 국가 코드)
+ * - swift_code: 선택, 최대 11자
+ * - website: 선택, 유효한 URL, 최대 255자
+ * - phone: 선택, 최대 50자
+ * - account_number: 선택, 최대 50자
+ * - account_holder: 선택, 최대 100자
+ * - description: 선택, 최대 1000자
+ * - enable: 불린값 (기본값: true)
+ * - sort_order: 정수, 0-9999 범위
+ *
+ * [라우트 연결]
+ * Route: POST /admin/auth/bank
+ * Name: admin.auth.bank.store
+ *
+ * [관련 컨트롤러]
+ * - CreateController: 생성 폼 제공
+ * - IndexController: 저장 완료 후 목록으로 리다이렉트
  */
 class StoreController extends Controller
 {

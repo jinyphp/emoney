@@ -167,7 +167,7 @@
 
             <!-- 최근 포인트 활동 -->
             <div class="card mb-4">
-                <div class="card-header bg-info text-white">
+                <div class="card-header">
                     <h6 class="mb-0">
                         <i class="fe fe-activity me-2"></i>최근 포인트 활동
                     </h6>

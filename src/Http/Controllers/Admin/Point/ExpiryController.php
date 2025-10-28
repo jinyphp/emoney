@@ -11,6 +11,70 @@ use Jiny\Auth\Facades\Shard;
 
 /**
  * 관리자 - 포인트 만료 관리 컨트롤러
+ *
+ * [메소드 호출 관계 트리]
+ * ExpiryController
+ * ├── __invoke(Request $request) - 만료 스케줄 목록
+ * │   ├── DB::table('user_point_expiry') - 만료 스케줄 쿼리
+ * │   ├── searchUserIds($search) - 샤딩된 사용자 검색
+ * │   ├── 필터링 적용
+ * │   │   ├── 사용자 검색: user_id, 사용자명, 이메일
+ * │   │   ├── 만료 상태: expired
+ * │   │   ├── 알림 상태: notified
+ * │   │   ├── 만료일 범위: expires_at
+ * │   │   └── 금액 범위: amount
+ * │   ├── $query->paginate($perPage) - 페이지네이션
+ * │   ├── 사용자 정보 매핑 (UUID 기반)
+ * │   └── 통계 계산 (총 건수, 총 금액, 상태별 분류)
+ * ├── show(Request $request, $id) - 개별 만료 스케줄 상세보기
+ * │   ├── DB::table('user_point_expiry')->find($id) - 만료 스케줄 조회
+ * │   ├── Shard::getUserByUuid($expiry->user_uuid) - 사용자 정보 조회
+ * │   └── 관련 통계 계산 (사용자별, 오늘 전체)
+ * ├── processExpiry(Request $request, $id) - 만료 처리 실행
+ * │   ├── DB::beginTransaction() - 트랜잭션 시작
+ * │   ├── 만료 스케줄 상태 업데이트
+ * │   ├── 사용자 포인트 차감 처리
+ * │   ├── 포인트 로그 기록
+ * │   └── DB::commit() - 트랜잭션 커밋
+ * ├── sendNotification(Request $request, $id) - 만료 알림 발송
+ * │   ├── 알림 메시지 생성
+ * │   ├── DB::table('user_notifications')->insert() - 알림 저장
+ * │   └── 알림 상태 업데이트
+ * ├── destroy(Request $request, $id) - 만료 스케줄 삭제
+ * │   └── DB::table('user_point_expiry')->delete($id)
+ * ├── export(Request $request) - 만료 스케줄 내보내기
+ * │   └── CSV/Excel 형식으로 데이터 내보내기
+ * └── searchUserIds($search) - 샤딩된 사용자 검색 헬퍼
+ *     ├── filter_var($search, FILTER_VALIDATE_EMAIL) - 이메일 형식 확인
+ *     ├── Shard::getUserByEmail($search) - 이메일로 사용자 조회
+ *     └── Shard::searchUsersByName($search) - 이름으로 사용자 검색
+ *
+ * [컨트롤러 역할]
+ * - 포인트 만료 스케줄 관리 및 모니터링
+ * - 샤딩된 사용자 시스템과 연동한 만료 관리
+ * - 만료 예정 포인트의 실제 만료 처리
+ * - 사용자에게 만료 알림 발송
+ * - 만료 스케줄 데이터 내보내기
+ *
+ * [포인트 만료 프로세스]
+ * 1. 만료 스케줄 등록 (자동/수동)
+ * 2. 만료 예정 알림 발송
+ * 3. 만료일 도래 시 실제 포인트 차감
+ * 4. 만료 처리 로그 기록
+ * 5. 완료된 만료 스케줄 관리
+ *
+ * [샤딩 시스템 연동]
+ * - 사용자 검색 시 샤딩된 사용자 테이블 조회
+ * - UUID 기반 사용자 정보 매핑
+ * - 크로스 샤드 검색 지원
+ *
+ * [라우트 연결]
+ * Route: GET /admin/auth/point/expiry - 목록
+ * Route: GET /admin/auth/point/expiry/{id} - 상세보기
+ * Route: POST /admin/auth/point/expiry/{id}/process - 만료 처리
+ * Route: POST /admin/auth/point/expiry/{id}/notify - 알림 발송
+ * Route: DELETE /admin/auth/point/expiry/{id} - 삭제
+ * Route: GET /admin/auth/point/expiry/export - 내보내기
  */
 class ExpiryController extends Controller
 {

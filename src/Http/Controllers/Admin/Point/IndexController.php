@@ -8,6 +8,54 @@ use Illuminate\Support\Facades\DB;
 
 /**
  * 관리자 - 포인트 관리 메인 컨트롤러
+ *
+ * [메소드 호출 관계 트리]
+ * IndexController
+ * └── __invoke(Request $request)
+ *     ├── 포인트 통계 초기화 (기본값 설정)
+ *     ├── 사용자 포인트 쿼리 구성
+ *     │   ├── DB::table('user_point')->join('users') - 사용자 테이블과 조인
+ *     │   ├── 검색 필터 적용 (사용자명, 이메일)
+ *     │   ├── 잔액 범위 필터 적용 (최소/최대 잔액)
+ *     │   └── $query->paginate($perPage) - 페이지네이션 적용
+ *     ├── 전체 통계 계산
+ *     │   ├── DB::table('user_point')->count() - 총 사용자 수
+ *     │   ├── DB::table('user_point')->sum('balance') - 총 포인트 잔액
+ *     │   ├── DB::table('user_point')->sum('total_earned/used/expired') - 각종 포인트 합계
+ *     │   ├── DB::table('user_point_log')->count() - 최근 거래 건수
+ *     │   └── DB::table('user_point_expiry')->sum('amount') - 만료 예정 포인트
+ *     ├── 관리자 조정 내역 조회
+ *     │   └── DB::table('user_point_log')->leftJoin('users') - 최근 관리자 조정 10건
+ *     ├── 사용자 활동 내역 조회
+ *     │   └── DB::table('user_point_log')->leftJoin('users') - 최근 사용자 활동 10건
+ *     └── view('jiny-emoney::admin.point.index', $data) - 뷰 렌더링
+ *
+ * [컨트롤러 역할]
+ * - 관리자용 포인트 시스템 대시보드
+ * - 전체 포인트 통계 및 현황 제공
+ * - 사용자별 포인트 잔액 및 활동 내역 표시
+ * - 포인트 검색 및 필터링 기능
+ * - 관리자 조정 내역 및 사용자 활동 모니터링
+ *
+ * [통계 정보]
+ * - 총 사용자 수, 총 포인트 잔액
+ * - 총 적립/사용/만료 포인트
+ * - 활성 사용자 수, 최근 거래 건수
+ * - 만료 예정 포인트, 평균 잔액
+ * - 상위 포인트 보유자 TOP 5
+ *
+ * [실시간 모니터링]
+ * - 최근 관리자 조정 내역 (10건)
+ * - 최근 사용자 포인트 활동 (10건)
+ * - 오늘의 포인트 활동 통계
+ *
+ * [라우트 연결]
+ * Route: GET /admin/auth/point
+ * Name: admin.auth.point.index
+ *
+ * [예외 처리]
+ * - 테이블 존재하지 않을 경우 경고 로그 기록
+ * - 오류 발생 시에도 빈 데이터로 뷰 렌더링
  */
 class IndexController extends Controller
 {

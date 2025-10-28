@@ -9,6 +9,79 @@ use Jiny\Auth\Facades\Shard;
 
 /**
  * 관리자 - 충전 신청 승인
+ *
+ * [메소드 호출 관계 트리]
+ * ApproveController
+ * ├── __invoke(Request $request, int $depositId)
+ * │   ├── DB::beginTransaction() - 트랜잭션 시작
+ * │   ├── 충전 신청 검증
+ * │   │   ├── DB::table('user_emoney_deposits')->where()->first() - 충전 신청 조회
+ * │   │   └── 상태 및 존재 여부 확인
+ * │   ├── 충전 신청 상태 업데이트
+ * │   │   └── DB::table('user_emoney_deposits')->update() - 승인 상태로 변경
+ * │   ├── 사용자 이머니 잔액 처리
+ * │   │   ├── DB::table('user_emoney')->where('user_uuid')->first() - 기존 지갑 조회
+ * │   │   ├── 기존 지갑이 있는 경우: DB::table('user_emoney')->update() - 잔액 추가
+ * │   │   └── 신규 지갑인 경우: DB::table('user_emoney')->insert() - 새 지갑 생성
+ * │   ├── 거래 로그 기록
+ * │   │   └── DB::table('user_emoney_logs')->insert() - 충전 승인 로그 생성
+ * │   ├── sendApprovalNotification($deposit, $amount, $adminMemo) - 승인 알림 발송
+ * │   ├── DB::commit() - 트랜잭션 커밋
+ * │   └── redirect()->route('admin.auth.emoney.deposits.index') - 성공 리다이렉트
+ * └── sendApprovalNotification($deposit, $amount, $adminMemo)
+ *     ├── Shard::getUserByUuid($deposit->user_uuid) - 사용자 정보 조회
+ *     ├── 알림 메시지 생성 (sprintf 포맷팅)
+ *     ├── JSON 데이터 구성
+ *     └── DB::table('user_notifications')->insert() - 알림 저장
+ *
+ * [컨트롤러 역할]
+ * - 대기 중인 충전 신청을 승인하여 사용자 이머니 잔액에 반영
+ * - 트랜잭션을 통한 안전한 데이터 처리
+ * - 사용자 이머니 지갑 생성 또는 업데이트
+ * - 충전 승인 내역 로그 기록
+ * - 사용자에게 승인 완료 알림 발송
+ *
+ * [핵심 비즈니스 로직]
+ * 1. 충전 신청 상태 확인 (pending 상태만 처리)
+ * 2. 충전 신청을 approved 상태로 변경
+ * 3. 사용자 이머니 잔액 업데이트 (기존 잔액 + 충전 금액)
+ * 4. 총 충전 금액 통계 업데이트
+ * 5. 거래 내역 로그 생성
+ * 6. 사용자 알림 발송
+ *
+ * [트랜잭션 처리]
+ * - DB::beginTransaction()로 시작
+ * - 모든 작업이 성공하면 DB::commit()
+ * - 오류 발생 시 DB::rollback()으로 전체 작업 취소
+ *
+ * [이머니 지갑 처리]
+ * - 기존 지갑: balance, total_deposit 업데이트
+ * - 신규 지갑: 새로운 지갑 레코드 생성 (초기 설정 포함)
+ *
+ * [알림 시스템]
+ * - 승인 완료 시 사용자에게 자동 알림 발송
+ * - 알림 실패가 메인 프로세스에 영향을 주지 않도록 예외 처리
+ * - 구조화된 알림 데이터 (JSON 형태로 상세 정보 저장)
+ *
+ * [라우트 연결]
+ * Route: POST /admin/auth/emoney/deposits/{id}/approve
+ * Name: admin.auth.emoney.deposits.approve
+ *
+ * [관련 컨트롤러]
+ * - IndexController: 승인 완료 후 목록으로 리다이렉트
+ * - ShowController: 상세보기에서 승인 버튼 클릭
+ * - RejectController: 거부 처리 (대안 액션)
+ *
+ * [보안 고려사항]
+ * - 관리자 권한 확인 (미들웨어에서 처리)
+ * - 중복 승인 방지 (pending 상태만 처리)
+ * - 트랜잭션을 통한 데이터 무결성 보장
+ * - 승인자 ID 기록으로 추적성 확보
+ *
+ * [로깅 및 모니터링]
+ * - 성공/실패 로그 기록
+ * - 알림 발송 상태 로깅
+ * - 오류 상황 상세 로깅
  */
 class ApproveController extends Controller
 {

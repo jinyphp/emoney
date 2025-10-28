@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 Route::middleware(['web', 'jwt'])->prefix('home/emoney')->name('home.emoney.')->group(function () {
 
     // 메인 이머니 대시보드 (기존 /home/dashboard/emoney를 대체)
-    Route::get('/', \Jiny\Emoney\Http\Controllers\Emoney\IndexController::class)->name('index');
+    Route::get('/', \Jiny\Emoney\Http\Controllers\Emoney\Dashboard\IndexController::class)->name('index');
 
     // 충전 관리 (기존 라우트 이름 유지)
     Route::get('/deposit', \Jiny\Emoney\Http\Controllers\Emoney\Deposit\IndexController::class)->name('deposit');
@@ -20,13 +20,13 @@ Route::middleware(['web', 'jwt'])->prefix('home/emoney')->name('home.emoney.')->
     Route::get('/deposit/{depositId}/status', \Jiny\Emoney\Http\Controllers\Emoney\Deposit\StatusController::class)->name('deposit.status');
     Route::post('/deposit/{depositId}/cancel', \Jiny\Emoney\Http\Controllers\Emoney\Deposit\CancelController::class)->name('deposit.cancel');
 
-    // 출금 관리
-    Route::get('/withdraw', \Jiny\Emoney\Http\Controllers\Emoney\WithdrawController::class)->name('withdraw');
+    // 출금 관리 (개선된 구조)
+    Route::get('/withdraw', \Jiny\Emoney\Http\Controllers\Emoney\Withdraw\IndexController::class)->name('withdraw');
     Route::post('/withdraw', \Jiny\Emoney\Http\Controllers\Emoney\Withdraw\StoreController::class)->name('withdraw.store');
     Route::get('/withdraw/history', \Jiny\Emoney\Http\Controllers\Emoney\Withdraw\HistoryController::class)->name('withdraw.history');
 
     // 거래 내역
-    Route::get('/log', \Jiny\Emoney\Http\Controllers\Emoney\LogController::class)->name('log');
+    Route::get('/log', \Jiny\Emoney\Http\Controllers\Emoney\Log\IndexController::class)->name('log');
 
     // 은행 계좌 관리
     Route::prefix('bank')->name('bank.')->group(function () {
@@ -41,8 +41,8 @@ Route::middleware(['web', 'jwt'])->prefix('home/emoney')->name('home.emoney.')->
 
     // 포인트 관리
     Route::prefix('point')->name('point.')->group(function () {
-        Route::get('/', \Jiny\Emoney\Http\Controllers\Point\IndexController::class)->name('index');
-        Route::get('/log', \Jiny\Emoney\Http\Controllers\Point\LogController::class)->name('log');
-        Route::get('/expiry', \Jiny\Emoney\Http\Controllers\Point\ExpiryController::class)->name('expiry');
+        Route::get('/', \Jiny\Emoney\Http\Controllers\Point\Dashboard\IndexController::class)->name('index');
+        Route::get('/log', \Jiny\Emoney\Http\Controllers\Point\Log\IndexController::class)->name('log');
+        Route::get('/expiry', \Jiny\Emoney\Http\Controllers\Point\Expiry\IndexController::class)->name('expiry');
     });
 });

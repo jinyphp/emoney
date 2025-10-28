@@ -7,6 +7,34 @@ use Illuminate\Http\Request;
 
 /**
  * 관리자 - 은행 생성 폼 컨트롤러
+ *
+ * [메소드 호출 관계 트리]
+ * CreateController
+ * ├── __invoke(Request $request)
+ * │   └── view('jiny-emoney::admin.auth-bank.create', $data) - 생성 폼 뷰 렌더링
+ * └── getBanksByCountry(Request $request, $countryCode)
+ *     ├── file_exists($bankListPath) - 은행 목록 파일 존재 확인
+ *     ├── file_get_contents($bankListPath) - JSON 파일 읽기
+ *     ├── json_decode($content, true) - JSON 데이터 파싱
+ *     ├── json_last_error() - JSON 파싱 오류 확인
+ *     └── response()->json($data) - AJAX 응답 반환
+ *
+ * [컨트롤러 역할]
+ * - 새로운 은행 생성을 위한 폼 페이지 제공
+ * - 국가별 은행 목록을 제공하는 AJAX API 엔드포인트
+ * - 클라이언트 사이드에서 국가 선택 시 은행 목록 동적 로딩 지원
+ *
+ * [라우트 연결]
+ * Route: GET /admin/auth/bank/create - 생성 폼 표시
+ * Route: GET /admin/auth/bank/api/banks/{countryCode} - AJAX API
+ * Name: admin.auth.bank.create, admin.auth.bank.api.banks
+ *
+ * [관련 컨트롤러]
+ * - IndexController: 은행 목록으로 돌아가기
+ * - StoreController: 생성된 데이터 저장 처리
+ *
+ * [외부 의존성]
+ * - banklist.json: 국가별 은행 목록 데이터 파일
  */
 class CreateController extends Controller
 {
@@ -47,7 +75,7 @@ class CreateController extends Controller
     {
         \Log::info('getBanksByCountry called with country: ' . $countryCode);
 
-        $bankListPath = __DIR__ . '/banklist.json';
+        $bankListPath = dirname(__DIR__, 5) . '/config/banklist.json';
         \Log::info('Looking for file at: ' . $bankListPath);
 
         if (!file_exists($bankListPath)) {

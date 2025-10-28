@@ -62,10 +62,21 @@ Route::prefix('admin/auth')->middleware(['web', 'admin'])->name('admin.auth.')->
 
     // 포인트 관리 (Point Management)
     Route::prefix('point')->name('point.')->group(function () {
+        // 정적 라우트들 (동적 라우트보다 우선)
+
         // 포인트 로그 관리
         Route::get('/log', \Jiny\Emoney\Http\Controllers\Admin\Point\LogController::class)->name('log');
 
-        // 포인트 만료 관리
+        // 포인트 통계
+        Route::get('/stats', \Jiny\Emoney\Http\Controllers\Admin\Point\StatsController::class)->name('stats');
+
+        // 포인트 생성 페이지
+        Route::get('/create', \Jiny\Emoney\Http\Controllers\Admin\Point\CreateController::class)->name('create');
+
+        // 포인트 만료 관리 (정적 라우트)
+        Route::get('/expiry', \Jiny\Emoney\Http\Controllers\Admin\Point\ExpiryController::class)->name('expiry');
+
+        // 포인트 만료 관리 (상세 라우트)
         Route::prefix('expiry')->name('expiry.')->group(function () {
             Route::get('/', \Jiny\Emoney\Http\Controllers\Admin\Point\ExpiryController::class)->name('index');
             Route::get('/export', [\Jiny\Emoney\Http\Controllers\Admin\Point\ExpiryController::class, 'export'])->name('export');
@@ -75,9 +86,6 @@ Route::prefix('admin/auth')->middleware(['web', 'admin'])->name('admin.auth.')->
             Route::delete('/{id}', [\Jiny\Emoney\Http\Controllers\Admin\Point\ExpiryController::class, 'destroy'])->name('destroy');
         });
 
-        // 포인트 통계
-        Route::get('/stats', \Jiny\Emoney\Http\Controllers\Admin\Point\StatsController::class)->name('stats');
-
         // AJAX API 라우트
         Route::post('/search-member', \Jiny\Emoney\Http\Controllers\Admin\Point\SearchMemberController::class)->name('search-member');
         Route::post('/search-member-sharded', \Jiny\Emoney\Http\Controllers\Admin\Point\SearchMemberShardedController::class)->name('search-member-sharded');
@@ -86,7 +94,6 @@ Route::prefix('admin/auth')->middleware(['web', 'admin'])->name('admin.auth.')->
 
         // 포인트 CRUD (동적 라우트는 마지막에)
         Route::get('/', \Jiny\Emoney\Http\Controllers\Admin\Point\IndexController::class)->name('index');
-        Route::get('/create', \Jiny\Emoney\Http\Controllers\Admin\Point\CreateController::class)->name('create');
         Route::post('/', \Jiny\Emoney\Http\Controllers\Admin\Point\StoreController::class)->name('store');
         Route::get('/{id}', \Jiny\Emoney\Http\Controllers\Admin\Point\ShowController::class)->name('show');
         Route::get('/{id}/edit', \Jiny\Emoney\Http\Controllers\Admin\Point\EditController::class)->name('edit');

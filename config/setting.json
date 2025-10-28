@@ -1,10 +1,14 @@
 {
-    "emoney":{
-        "enable":true,
-        "register":1000
+    "emoney": {
+        "enable": true,
+        "register": 1000,
+        "default_balance": 0,
+        "max_balance": 1000000,
+        "transfer_enabled": true,
+        "transfer_fee": 0
     },
-    "point":{
-        "enable":true,
-        "register":1000
+    "point": {
+        "enable": true,
+        "register": 1000
     }
 }

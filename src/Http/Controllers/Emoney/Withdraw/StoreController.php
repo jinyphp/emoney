@@ -9,6 +9,80 @@ use Jiny\Auth\Http\Controllers\Traits\JWTAuthTrait;
 
 /**
  * 사용자 - 이머니 출금 신청 처리
+ *
+ * [메소드 호출 관계 트리]
+ * StoreController
+ * └── __invoke(Request $request)
+ *     ├── getAuthenticatedUser($request) - JWT 다중 인증 방식으로 사용자 확인
+ *     ├── DB::beginTransaction() - 트랜잭션 시작
+ *     ├── $request->validate() - 입력값 유효성 검사
+ *     │   ├── bank_account_id: 필수, 정수
+ *     │   ├── amount: 필수, 숫자, 최소 5000원
+ *     │   └── withdraw_reason: 선택, 문자열, 최대 500자
+ *     ├── DB::table('user_emoney')->where('user_uuid', $userUuid)->first() - 사용자 이머니 잔액 확인
+ *     ├── DB::table('user_emoney_bank') - 선택된 은행계좌 검증
+ *     │   ├── ->where('id', $bankAccountId) - 계좌 ID 확인
+ *     │   ├── ->where('user_id', $userUuid) - 본인 계좌 확인
+ *     │   └── ->where('enable', '1') - 활성화된 계좌만
+ *     ├── 출금 수수료 계산 (5% 또는 최소 1000원)
+ *     ├── DB::table('user_emoney_withdrawals')->insertGetId() - 출금 신청 기록
+ *     ├── DB::table('user_emoney_logs')->insert() - 출금 신청 로그 기록
+ *     ├── DB::table('user_notifications')->insert() - 사용자 알림 생성
+ *     ├── DB::commit() - 트랜잭션 커밋
+ *     └── redirect()->route('home.emoney.withdraw') - 성공 리다이렉트
+ *
+ * [컨트롤러 역할]
+ * - 사용자의 이머니 출금 신청 처리
+ * - 출금 가능 금액 검증 (잔액 확인)
+ * - 등록된 은행계좌 검증
+ * - 출금 수수료 계산 및 적용
+ * - 출금 신청 데이터 저장 (pending 상태)
+ * - 출금 신청 로그 기록
+ * - 사용자 알림 발송
+ *
+ * [유효성 검사 규칙]
+ * - bank_account_id: 필수, 등록된 은행계좌 ID
+ * - amount: 필수, 숫자, 최소 5,000원
+ * - withdraw_reason: 선택, 출금 사유 (최대 500자)
+ *
+ * [비즈니스 로직]
+ * 1. 사용자 인증 및 이머니 잔액 확인
+ * 2. 선택된 은행계좌 유효성 검증
+ * 3. 출금 수수료 계산 (5% 또는 최소 1,000원)
+ * 4. 출금 신청 레코드 생성 (pending 상태)
+ * 5. 출금 신청 로그 기록
+ * 6. 사용자 알림 발송
+ * 7. 관리자 승인 대기 상태로 설정
+ *
+ * [수수료 계산]
+ * - 기본 수수료율: 5%
+ * - 최소 수수료: 1,000원
+ * - 실제 입금액 = 출금신청액 - 수수료
+ *
+ * [출금 프로세스]
+ * 1. 출금 신청 (pending 상태)
+ * 2. 관리자 승인/거부 처리
+ * 3. 승인 시 실제 이머니 잔액 차감
+ * 4. 은행 송금 처리
+ * 5. 완료 알림 발송
+ *
+ * [참조번호 생성]
+ * - 형식: WD + YYYYMMDD + 사용자UUID(6자리) + 랜덤(4자리)
+ * - 예: WD20241028000123456789
+ *
+ * [보안 고려사항]
+ * - 본인 소유 은행계좌만 사용 가능
+ * - 트랜잭션으로 데이터 일관성 보장
+ * - 출금 신청 단계에서는 이머니 잔액 변동 없음
+ * - 관리자 승인 후 실제 차감 처리
+ *
+ * [라우트 연결]
+ * Route: POST /emoney/withdraw
+ * Name: home.emoney.withdraw.store
+ *
+ * [관련 컨트롤러]
+ * - IndexController: 출금 페이지 표시
+ * - HistoryController: 출금 내역 조회
  */
 class StoreController extends Controller
 {
