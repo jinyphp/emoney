@@ -39,4 +39,35 @@ class CreateController extends Controller
             'countries' => $countries,
         ]);
     }
+
+    /**
+     * 국가별 은행 목록 조회 (AJAX API)
+     */
+    public function getBanksByCountry(Request $request, $countryCode)
+    {
+        \Log::info('getBanksByCountry called with country: ' . $countryCode);
+
+        $bankListPath = __DIR__ . '/banklist.json';
+        \Log::info('Looking for file at: ' . $bankListPath);
+
+        if (!file_exists($bankListPath)) {
+            \Log::error('Bank list file not found at: ' . $bankListPath);
+            return response()->json(['error' => '은행 목록을 찾을 수 없습니다.'], 404);
+        }
+
+        $bankList = json_decode(file_get_contents($bankListPath), true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            \Log::error('JSON decode error: ' . json_last_error_msg());
+            return response()->json(['error' => 'JSON 파싱 오류가 발생했습니다.'], 500);
+        }
+
+        if (!isset($bankList[$countryCode])) {
+            \Log::info('No banks found for country: ' . $countryCode);
+            return response()->json(['banks' => []]);
+        }
+
+        \Log::info('Found ' . count($bankList[$countryCode]) . ' banks for country: ' . $countryCode);
+        return response()->json(['banks' => $bankList[$countryCode]]);
+    }
 }

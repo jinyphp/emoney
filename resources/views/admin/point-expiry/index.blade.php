@@ -174,120 +174,90 @@
 
             <!-- 만료 스케줄 목록 -->
             <div class="card">
-                <div class="card-body">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">총 신청 목록 ({{ $expiries->total() ?? 0 }}건)</h6>
+                        <div class="text-muted small">
+                            {{ $expiries->firstItem() ?? 0 }}-{{ $expiries->lastItem() ?? 0 }} of {{ $expiries->total() ?? 0 }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
                     @if(isset($expiries) && $expiries->count() > 0)
                         <div class="table-responsive">
-                            <table class="table table-hover table-sm">
-                                <thead>
+                            <table class="table table-hover">
+                                <thead class="table-light">
                                     <tr>
-                                        <th>ID</th>
-                                        <th>사용자</th>
-                                        <th>포인트</th>
-                                        <th>만료일</th>
-                                        <th>남은 기간</th>
-                                        <th>상태</th>
-                                        <th>알림</th>
-                                        <th>등록일</th>
-                                        <th>액션</th>
+                                        <th style="width: 50px;">ID</th>
+                                        <th style="width: 180px;">사용자</th>
+                                        <th style="width: 160px;">금액/유형</th>
+                                        <th style="width: 80px;">상태</th>
+                                        <th style="width: 120px;">신청일시</th>
+                                        <th style="width: 120px;">처리일시</th>
+                                        <th style="width: 80px;">작업</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($expiries as $expiry)
-                                        <tr class="{{ $expiry->isExpired() ? 'table-secondary' : ($expiry->isExpiringSoon(3) ? 'table-warning' : '') }}">
-                                            <td><strong>#{{ $expiry->id }}</strong></td>
+                                        @php
+                                            $isExpired = $expiry->expired || \Carbon\Carbon::parse($expiry->expires_at)->isPast();
+                                            $isExpiringSoon = !$expiry->expired && \Carbon\Carbon::parse($expiry->expires_at)->diffInDays(now()) <= 3;
+                                        @endphp
+                                        <tr>
+                                            <td>
+                                                <strong>{{ $expiry->id }}</strong>
+                                            </td>
                                             <td>
                                                 <div>
-                                                    <strong>{{ $expiry->user->name ?? 'N/A' }}</strong>
+                                                    <strong>{{ $expiry->user_data->name ?? 'N/A' }}</strong>
                                                     <br>
-                                                    <small class="text-muted">{{ $expiry->user->email ?? 'N/A' }}</small>
+                                                    <small class="text-muted">{{ $expiry->user_data->email ?? 'N/A' }}</small>
                                                 </div>
                                             </td>
                                             <td>
-                                                <span class="badge bg-primary">
-                                                    {{ number_format($expiry->amount, 0) }}P
-                                                </span>
-                                            </td>
-                                            <td>
                                                 <div>
-                                                    <strong>{{ $expiry->expires_at->format('Y-m-d') }}</strong>
+                                                    <strong class="text-primary">₩{{ number_format($expiry->amount, 0) }}</strong>
                                                     <br>
-                                                    <small class="text-muted">{{ $expiry->expires_at->format('H:i') }}</small>
+                                                    <small class="text-muted">(포인트만료)</small>
                                                 </div>
                                             </td>
                                             <td>
                                                 @if($expiry->expired)
-                                                    <span class="badge bg-secondary">만료됨</span>
-                                                @elseif($expiry->expires_at->isPast())
-                                                    <span class="badge bg-danger">만료 예정</span>
+                                                    <span class="badge bg-secondary">처리됨</span>
+                                                @elseif($isExpiringSoon)
+                                                    <span class="badge bg-warning">거부됨</span>
                                                 @else
-                                                    @php
-                                                        $days = $expiry->expires_at->diffInDays(now());
-                                                        $hours = $expiry->expires_at->diffInHours(now()) % 24;
-                                                    @endphp
-                                                    @if($days > 0)
-                                                        <span class="badge {{ $days <= 3 ? 'bg-warning' : 'bg-info' }}">
-                                                            {{ $days }}일 {{ $hours }}시간
-                                                        </span>
-                                                    @else
-                                                        <span class="badge bg-danger">
-                                                            {{ $hours }}시간
-                                                        </span>
-                                                    @endif
+                                                    <span class="badge bg-success">승인됨</span>
                                                 @endif
                                             </td>
                                             <td>
-                                                @if($expiry->expired)
-                                                    <div>
-                                                        <span class="badge bg-secondary">만료 완료</span>
-                                                        @if($expiry->expired_at)
-                                                            <br>
-                                                            <small class="text-muted">{{ $expiry->expired_at->format('m-d H:i') }}</small>
-                                                        @endif
-                                                    </div>
+                                                <div>{{ \Carbon\Carbon::parse($expiry->created_at)->format('Y-m-d H:i') }}</div>
+                                            </td>
+                                            <td>
+                                                @if($expiry->expired && $expiry->expired_at)
+                                                    <div>{{ \Carbon\Carbon::parse($expiry->expired_at)->format('Y-m-d H:i') }}</div>
+                                                    <small class="text-muted">#1</small>
                                                 @else
-                                                    <span class="badge bg-warning">대기 중</span>
+                                                    <div>{{ \Carbon\Carbon::parse($expiry->expires_at)->format('Y-m-d H:i') }}</div>
+                                                    <small class="text-muted">#1</small>
                                                 @endif
                                             </td>
                                             <td>
-                                                @if($expiry->notified)
-                                                    <div>
-                                                        <span class="badge bg-success">
-                                                            <i class="fe fe-check"></i> 발송
-                                                        </span>
-                                                        @if($expiry->notified_at)
-                                                            <br>
-                                                            <small class="text-muted">{{ $expiry->notified_at->format('m-d H:i') }}</small>
-                                                        @endif
-                                                    </div>
-                                                @else
-                                                    <span class="badge bg-secondary">미발송</span>
-                                                @endif
-                                            </td>
-                                            <td>{{ $expiry->created_at->format('m-d H:i') }}</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                                        액션
+                                                <div class="d-flex gap-1">
+                                                    <button class="btn btn-sm btn-outline-primary" onclick="viewExpiryDetails({{ $expiry->id }})" title="상세보기">
+                                                        <i class="fe fe-eye"></i>
                                                     </button>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="#" onclick="viewExpiryDetails({{ $expiry->id }})">
-                                                            <i class="fe fe-eye me-2"></i>상세보기
-                                                        </a></li>
-                                                        @if(!$expiry->expired && $expiry->expires_at->isPast())
-                                                        <li><a class="dropdown-item text-warning" href="#" onclick="processExpiry({{ $expiry->id }})">
-                                                            <i class="fe fe-clock me-2"></i>만료 처리
-                                                        </a></li>
-                                                        @endif
-                                                        @if(!$expiry->notified && !$expiry->expired)
-                                                        <li><a class="dropdown-item text-info" href="#" onclick="sendNotification({{ $expiry->id }})">
-                                                            <i class="fe fe-bell me-2"></i>알림 발송
-                                                        </a></li>
-                                                        @endif
-                                                        <li><a class="dropdown-item" href="#" onclick="viewPointLog({{ $expiry->point_log_id }})">
-                                                            <i class="fe fe-list me-2"></i>원본 로그
-                                                        </a></li>
-                                                    </ul>
+                                                    @if(!$expiry->expired)
+                                                    <button class="btn btn-sm btn-outline-danger" onclick="processExpiry({{ $expiry->id }})" title="삭제">
+                                                        <i class="fe fe-trash-2"></i>
+                                                    </button>
+                                                    @endif
                                                 </div>
+                                                @if(!$expiry->expired && $isExpiringSoon)
+                                                <div class="mt-1">
+                                                    <small class="text-danger">임금 확인이 되지 않습니다. 정확한 계좌번호와 입금자명을 확인해 주세요.</small>
+                                                </div>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -315,23 +285,86 @@
 <!-- Scripts -->
 <script>
 function viewExpiryDetails(id) {
-    alert('만료 상세보기 기능 준비중입니다.');
+    window.location.href = '/admin/auth/point/expiry/' + id;
 }
 
 function processExpiry(id) {
-    if(confirm('이 포인트를 만료 처리하시겠습니까?')) {
-        alert('만료 처리 기능 준비중입니다.');
+    if(confirm('이 포인트를 만료 처리하시겠습니까?\n\n처리 후에는 되돌릴 수 없습니다.')) {
+        fetch('/admin/auth/point/expiry/' + id + '/process', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                alert('만료 처리가 완료되었습니다.');
+                location.reload();
+            } else {
+                alert('만료 처리 중 오류가 발생했습니다: ' + (data.message || '알 수 없는 오류'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('만료 처리 중 오류가 발생했습니다.');
+        });
     }
 }
 
 function sendNotification(id) {
     if(confirm('만료 알림을 발송하시겠습니까?')) {
-        alert('알림 발송 기능 준비중입니다.');
+        fetch('/admin/auth/point/expiry/' + id + '/notify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                alert('알림이 발송되었습니다.');
+                location.reload();
+            } else {
+                alert('알림 발송 중 오류가 발생했습니다: ' + (data.message || '알 수 없는 오류'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('알림 발송 중 오류가 발생했습니다.');
+        });
+    }
+}
+
+function deleteExpiry(id) {
+    if(confirm('이 만료 스케줄을 삭제하시겠습니까?\n\n삭제 후에는 되돌릴 수 없습니다.')) {
+        fetch('/admin/auth/point/expiry/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                alert('만료 스케줄이 삭제되었습니다.');
+                location.reload();
+            } else {
+                alert('삭제 중 오류가 발생했습니다: ' + (data.message || '알 수 없는 오류'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('삭제 중 오류가 발생했습니다.');
+        });
     }
 }
 
 function viewPointLog(logId) {
-    alert('포인트 로그 보기 기능 준비중입니다.');
+    window.location.href = '/admin/auth/point/log?log_id=' + logId;
 }
 
 function processExpiredPoints() {
@@ -347,7 +380,21 @@ function sendExpiryNotifications() {
 }
 
 function exportExpiry() {
-    alert('엑셀 다운로드 기능 준비중입니다.');
+    // 현재 검색 조건을 포함해서 엑셀 다운로드
+    const form = document.querySelector('form[method="GET"]');
+    const formData = new FormData(form);
+
+    // URL 파라미터 구성
+    const urlParams = new URLSearchParams();
+    for (let [key, value] of formData.entries()) {
+        if (value) {
+            urlParams.append(key, value);
+        }
+    }
+
+    // 엑셀 다운로드 URL로 이동 (현재 필터 조건 포함)
+    const exportUrl = '/admin/auth/point/expiry/export?' + urlParams.toString();
+    window.location.href = exportUrl;
 }
 </script>
 @endsection

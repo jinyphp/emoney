@@ -43,4 +43,24 @@ class EditController extends Controller
             'countries' => $countries,
         ]);
     }
+
+    /**
+     * 국가별 은행 목록 조회 (AJAX API)
+     */
+    public function getBanksByCountry(Request $request, $countryCode)
+    {
+        $bankListPath = __DIR__ . '/banklist.json';
+
+        if (!file_exists($bankListPath)) {
+            return response()->json(['error' => '은행 목록을 찾을 수 없습니다.'], 404);
+        }
+
+        $bankList = json_decode(file_get_contents($bankListPath), true);
+
+        if (!isset($bankList[$countryCode])) {
+            return response()->json(['banks' => []]);
+        }
+
+        return response()->json(['banks' => $bankList[$countryCode]]);
+    }
 }

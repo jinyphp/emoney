@@ -27,32 +27,32 @@ class StatsController extends Controller
             case '1week':
                 $startDate = now()->subWeek();
                 $dateFormat = '%Y-%m-%d';
-                $groupBy = 'DATE(created_at)';
+                $groupBy = 'date(created_at)';
                 break;
             case '1month':
                 $startDate = now()->subMonth();
                 $dateFormat = '%Y-%m-%d';
-                $groupBy = 'DATE(created_at)';
+                $groupBy = 'date(created_at)';
                 break;
             case '3month':
                 $startDate = now()->subMonths(3);
                 $dateFormat = '%Y-%m-%d';
-                $groupBy = 'DATE(created_at)';
+                $groupBy = 'date(created_at)';
                 break;
             case '6month':
                 $startDate = now()->subMonths(6);
                 $dateFormat = '%Y-%m';
-                $groupBy = 'DATE_FORMAT(created_at, "%Y-%m")';
+                $groupBy = 'strftime("%Y-%m", created_at)';
                 break;
             case '1year':
                 $startDate = now()->subYear();
                 $dateFormat = '%Y-%m';
-                $groupBy = 'DATE_FORMAT(created_at, "%Y-%m")';
+                $groupBy = 'strftime("%Y-%m", created_at)';
                 break;
             default:
                 $startDate = now()->subMonth();
                 $dateFormat = '%Y-%m-%d';
-                $groupBy = 'DATE(created_at)';
+                $groupBy = 'date(created_at)';
         }
 
         // 전체 통계
@@ -168,7 +168,7 @@ class StatsController extends Controller
         '))
         ->get();
 
-        return view('jiny-emoney::point.stats', [
+        return view('jiny-emoney::admin.point-stats.index', [
             'period' => $period,
             'overall_stats' => $overallStats,
             'period_stats' => $periodStats,

@@ -4,6 +4,7 @@ namespace Jiny\Emoney\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Jiny\Auth\Models\JwtAuth;
 
 class UserPointExpiry extends Model
 {
@@ -34,11 +35,27 @@ class UserPointExpiry extends Model
     ];
 
     /**
-     * 사용자 관계
+     * 사용자 관계 (샤딩된 사용자 지원)
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(JwtAuth::class, 'user_id');
+    }
+
+    /**
+     * 사용자 정보를 동적으로 조회하는 헬퍼 메서드
+     */
+    public function getUserData()
+    {
+        if ($this->user_id) {
+            return JwtAuth::find($this->user_id);
+        }
+
+        if ($this->user_uuid) {
+            return JwtAuth::findByUuid($this->user_uuid);
+        }
+
+        return null;
     }
 
     /**

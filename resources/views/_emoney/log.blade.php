@@ -103,7 +103,7 @@
             <!-- 검색 및 필터 -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <form method="GET" action="{{ route('admin.auth.emoney.log') }}">
+                    <form method="GET" action="{{ route('admin.auth.emoney.index') }}">
                         <div class="row g-3">
                             <div class="col-md-3">
                                 <label class="form-label">검색</label>
@@ -150,7 +150,7 @@
                         <div class="row g-3 mt-2">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary">검색</button>
-                                <a href="{{ route('admin.auth.emoney.log') }}" class="btn btn-outline-secondary">초기화</a>
+                                <a href="{{ route('admin.auth.emoney.index') }}" class="btn btn-outline-secondary">초기화</a>
                                 <button type="button" class="btn btn-success" onclick="exportLogs()">
                                     <i class="fe fe-download me-2"></i>엑셀 다운로드
                                 </button>

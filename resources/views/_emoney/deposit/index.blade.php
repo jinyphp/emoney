@@ -96,7 +96,7 @@
             <!-- 검색 및 필터 -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <form method="GET" action="{{ route('admin.auth.emoney.deposits') }}">
+                    <form method="GET" action="{{ route('admin.auth.emoney.deposits.index') }}">
                         <div class="row g-3">
                             <div class="col-md-3">
                                 <label class="form-label">검색</label>
@@ -131,7 +131,7 @@
                                 <label class="form-label">&nbsp;</label>
                                 <div class="d-flex gap-1">
                                     <button type="submit" class="btn btn-primary btn-sm">검색</button>
-                                    <a href="{{ route('admin.auth.emoney.deposits') }}" class="btn btn-outline-secondary btn-sm">초기화</a>
+                                    <a href="{{ route('admin.auth.emoney.deposits.index') }}" class="btn btn-outline-secondary btn-sm">초기화</a>
                                 </div>
                             </div>
                         </div>

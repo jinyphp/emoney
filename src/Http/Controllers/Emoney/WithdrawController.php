@@ -5,91 +5,76 @@ namespace Jiny\Emoney\Http\Controllers\Emoney;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Jiny\Emoney\Models\UserEmoneyWithdraw;
+use Jiny\Auth\Http\Controllers\Traits\JWTAuthTrait;
 
 /**
- * 관리자 - 사용자 출금 관리 컨트롤러
+ * 사용자 - 이머니 출금 컨트롤러
  */
 class WithdrawController extends Controller
 {
+    use JWTAuthTrait;
+
     /**
-     * 사용자 출금 내역 목록 표시
+     * 사용자 이머니 출금 페이지
      */
     public function __invoke(Request $request)
     {
-        $query = UserEmoneyWithdraw::query();
+        // JWT 토큰을 포함한 다중 인증 방식으로 사용자 확인
+        $user = $this->getAuthenticatedUser($request);
 
-        // 검색 기능
-        if ($request->filled('search')) {
-            $search = $request->get('search');
-            $query->where(function($q) use ($search) {
-                $q->where('email', 'like', "%{$search}%")
-                  ->orWhere('user_id', 'like', "%{$search}%")
-                  ->orWhere('bank', 'like', "%{$search}%")
-                  ->orWhere('account', 'like', "%{$search}%")
-                  ->orWhere('owner', 'like', "%{$search}%");
-            });
+        if (!$user) {
+            return redirect()->route('login');
         }
 
-        // 상태 필터
-        if ($request->filled('status')) {
-            $query->where('status', $request->get('status'));
+        $userUuid = $user->uuid ?? '';
+
+        // 사용자 이머니 정보 조회
+        $emoney = null;
+        $bankAccounts = collect();
+
+        if ($userUuid) {
+            try {
+                $emoney = DB::table('user_emoney')->where('user_uuid', $userUuid)->first();
+                $rawBankAccounts = DB::table('user_emoney_bank')
+                    ->where('user_id', $userUuid)
+                    ->where('enable', '1')
+                    ->orderBy('`default`', 'desc')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
+                // 뷰에서 사용하는 프로퍼티명으로 매핑
+                $bankAccounts = $rawBankAccounts->map(function ($account) {
+                    $account->is_default = $account->default == '1';
+                    $account->bank_name = $account->bank;
+                    $account->account_number = $account->account;
+                    $account->account_holder = $account->owner;
+                    return $account;
+                });
+
+                // 최근 출금 기록 조회 (최근 5개)
+                $recentWithdrawals = DB::table('user_emoney_withdrawals')
+                    ->where('user_uuid', $userUuid)
+                    ->orderBy('created_at', 'desc')
+                    ->limit(5)
+                    ->get();
+
+            } catch (\Exception $e) {
+                // 테이블이 없는 경우 무시
+                \Log::warning('Withdraw controller query failed', [
+                    'user_uuid' => $userUuid,
+                    'error' => $e->getMessage()
+                ]);
+                $recentWithdrawals = collect();
+            }
+        } else {
+            $recentWithdrawals = collect();
         }
 
-        // 통화 필터
-        if ($request->filled('currency')) {
-            $query->where('currency', $request->get('currency'));
-        }
-
-        // 확인 상태 필터
-        if ($request->filled('checked')) {
-            $query->where('checked', $request->get('checked'));
-        }
-
-        // 은행 필터
-        if ($request->filled('bank')) {
-            $query->where('bank', $request->get('bank'));
-        }
-
-        // 날짜 범위 필터
-        if ($request->filled('date_from')) {
-            $query->where('created_at', '>=', $request->get('date_from'));
-        }
-        if ($request->filled('date_to')) {
-            $query->where('created_at', '<=', $request->get('date_to') . ' 23:59:59');
-        }
-
-        // 금액 범위 필터
-        if ($request->filled('amount_from')) {
-            $query->where('amount', '>=', $request->get('amount_from'));
-        }
-        if ($request->filled('amount_to')) {
-            $query->where('amount', '<=', $request->get('amount_to'));
-        }
-
-        // 정렬
-        $sortBy = $request->get('sort_by', 'created_at');
-        $sortOrder = $request->get('sort_order', 'desc');
-        $query->orderBy($sortBy, $sortOrder);
-
-        // 페이지네이션
-        $perPage = $request->get('per_page', 20);
-        $withdrawals = $query->paginate($perPage);
-
-        // 통계 정보
-        $statistics = [
-            'total_withdrawals' => UserEmoneyWithdraw::count(),
-            'pending_withdrawals' => UserEmoneyWithdraw::where('checked', null)->count(),
-            'approved_withdrawals' => UserEmoneyWithdraw::where('checked', '1')->count(),
-            'total_amount' => UserEmoneyWithdraw::where('checked', '1')->sum('amount'),
-            'today_withdrawals' => UserEmoneyWithdraw::whereDate('created_at', today())->count(),
-            'today_amount' => UserEmoneyWithdraw::whereDate('created_at', today())->where('checked', '1')->sum('amount'),
-        ];
-
-        return view('jiny-emoney::emoney.withdraw', [
-            'withdrawals' => $withdrawals,
-            'statistics' => $statistics,
-            'request' => $request,
+        return view('jiny-emoney::home.withdraw.index', [
+            'user' => $user,
+            'emoney' => $emoney,
+            'bankAccounts' => $bankAccounts,
+            'recentWithdrawals' => $recentWithdrawals ?? collect(),
         ]);
     }
 }

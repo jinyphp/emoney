@@ -14,8 +14,8 @@ class JinyEmoneyServiceProvider extends ServiceProvider
     public function boot()
     {
         // 모듈: 라우트 설정
-        $this->loadRoutesFrom(__DIR__.'/routes/web.php');
-        $this->loadRoutesFrom(__DIR__.'/routes/admin.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/admin.php');
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', $this->package);
 
@@ -25,7 +25,8 @@ class JinyEmoneyServiceProvider extends ServiceProvider
 
     public function register()
     {
-
+        // jiny/auth 패키지의 JwtAuth 파사드를 사용합니다.
+        // JwtAuth:: 파사드는 jiny/auth 패키지에서 제공됩니다.
     }
 
 }

@@ -72,26 +72,6 @@
                     <div class="card-body">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label for="name" class="form-label">은행명 <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                       id="name" name="name" value="{{ old('name', $bank->name) }}" required placeholder="은행명을 입력하세요">
-                                @error('name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="code" class="form-label">은행 코드</label>
-                                <input type="text" class="form-control @error('code') is-invalid @enderror"
-                                       id="code" name="code" value="{{ old('code', $bank->code) }}" maxlength="10"
-                                       placeholder="은행을 식별하는 고유 코드 (선택사항)">
-                                @error('code')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                                <div class="form-text">시스템 내부에서 사용할 고유 코드</div>
-                            </div>
-
-                            <div class="col-md-6">
                                 <label for="country" class="form-label">국가 <span class="text-danger">*</span></label>
                                 <select class="form-select @error('country') is-invalid @enderror" id="country" name="country" required>
                                     <option value="">국가를 선택하세요</option>
@@ -105,41 +85,91 @@
                             </div>
 
                             <div class="col-md-6">
+                                <label for="bank_select" class="form-label">은행 선택 <span class="text-danger">*</span></label>
+                                <select class="form-select @error('name') is-invalid @enderror" id="bank_select">
+                                    <option value="">로딩 중...</option>
+                                </select>
+                                <input type="hidden" id="name" name="name" value="{{ old('name', $bank->name) }}">
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" id="custom_bank">
+                                    <label class="form-check-label" for="custom_bank">
+                                        사용자 정의 은행 정보 사용
+                                    </label>
+                                </div>
+                                @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="code" class="form-label">은행 코드</label>
+                                <input type="text" class="form-control @error('code') is-invalid @enderror"
+                                       id="code" name="code" value="{{ old('code', $bank->code) }}" maxlength="10"
+                                       placeholder="은행을 식별하는 고유 코드" readonly>
+                                @error('code')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                                <div class="form-text">은행 선택 시 자동으로 설정됩니다</div>
+                            </div>
+
+                            <div class="col-md-6">
                                 <label for="swift_code" class="form-label">SWIFT 코드</label>
                                 <input type="text" class="form-control @error('swift_code') is-invalid @enderror"
                                        id="swift_code" name="swift_code" value="{{ old('swift_code', $bank->swift_code) }}" maxlength="11"
-                                       placeholder="국제 송금을 위한 SWIFT 코드 (선택사항)">
+                                       placeholder="SWIFT 코드" readonly>
                                 @error('swift_code')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-                                <div class="form-text">국제 송금용 식별 코드</div>
+                                <div class="form-text">은행 선택 시 자동으로 설정됩니다</div>
                             </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- 연락처 정보 섹션 -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h4 class="card-title mb-0">연락처 정보</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="website" class="form-label">웹사이트</label>
                                 <input type="url" class="form-control @error('website') is-invalid @enderror"
-                                       id="website" name="website" value="{{ old('website', $bank->website) }}" placeholder="https://example.com">
+                                       id="website" name="website" value="{{ old('website', $bank->website) }}" placeholder="https://example.com" readonly>
                                 @error('website')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+                                <div class="form-text">은행 선택 시 자동으로 설정됩니다</div>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="phone" class="form-label">전화번호</label>
                                 <input type="text" class="form-control @error('phone') is-invalid @enderror"
                                        id="phone" name="phone" value="{{ old('phone', $bank->phone) }}" maxlength="50"
-                                       placeholder="고객 서비스 전화번호">
+                                       placeholder="전화번호" readonly>
                                 @error('phone')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                                <div class="form-text">은행 선택 시 자동으로 설정됩니다</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 계좌 정보 섹션 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">계좌 정보</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="account_number" class="form-label">계좌번호</label>
+                                <input type="text" class="form-control @error('account_number') is-invalid @enderror"
+                                       id="account_number" name="account_number" value="{{ old('account_number', $bank->account_number) }}" maxlength="50"
+                                       placeholder="계좌번호를 입력하세요">
+                                @error('account_number')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="account_holder" class="form-label">예금주</label>
+                                <input type="text" class="form-control @error('account_holder') is-invalid @enderror"
+                                       id="account_holder" name="account_holder" value="{{ old('account_holder', $bank->account_holder) }}" maxlength="100"
+                                       placeholder="예금주명을 입력하세요">
+                                @error('account_holder')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -263,6 +293,18 @@
                         </div>
                         <div class="col-12">
                             <div class="d-flex justify-content-between py-2 border-bottom">
+                                <span class="text-muted">계좌번호</span>
+                                <span>{{ $bank->account_number ?: '-' }}</span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between py-2 border-bottom">
+                                <span class="text-muted">예금주</span>
+                                <span>{{ $bank->account_holder ?: '-' }}</span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between py-2 border-bottom">
                                 <span class="text-muted">정렬 순서</span>
                                 <span class="badge bg-light text-dark">{{ $bank->sort_order }}</span>
                             </div>
@@ -294,6 +336,7 @@
                                 <li class="mb-1">• 은행명: 사용자에게 표시될 은행 이름</li>
                                 <li class="mb-1">• 국가: 은행이 소속된 국가</li>
                                 <li class="mb-1">• 연락처: 웹사이트, 전화번호</li>
+                                <li class="mb-1">• 계좌 정보: 계좌번호, 예금주</li>
                                 <li class="mb-1">• 상태: 활성/비활성 상태 변경</li>
                             </ul>
                         </div>
@@ -384,5 +427,163 @@ function deleteBank(id, bankName) {
         form.submit();
     }
 }
+</script>
+
+<script>
+// 은행 데이터 (하드코딩으로 임시 해결)
+const bankData = {
+    "KR": [
+        {"name": "KB국민은행", "code": "KB", "swift_code": "CZNBKRSE", "website": "https://www.kbstar.com", "phone": "1588-9999"},
+        {"name": "신한은행", "code": "SH", "swift_code": "SHBKKRSE", "website": "https://www.shinhan.com", "phone": "1599-8000"},
+        {"name": "우리은행", "code": "WR", "swift_code": "HVBKKRSE", "website": "https://www.wooribank.com", "phone": "1599-5000"},
+        {"name": "하나은행", "code": "HN", "swift_code": "HNBNKRSE", "website": "https://www.kebhana.com", "phone": "1599-1111"},
+        {"name": "기업은행", "code": "IBK", "swift_code": "IBKOKRSE", "website": "https://www.ibk.co.kr", "phone": "1566-2566"},
+        {"name": "NH농협은행", "code": "NH", "swift_code": "NACFKRSE", "website": "https://banking.nonghyup.com", "phone": "1588-2100"},
+        {"name": "수협은행", "code": "SUHYUP", "swift_code": "SHFCKRSE", "website": "https://www.suhyup-bank.com", "phone": "1588-1515"},
+        {"name": "카카오뱅크", "code": "KAKAO", "swift_code": null, "website": "https://www.kakaobank.com", "phone": "1599-3333"},
+        {"name": "케이뱅크", "code": "KBANK", "swift_code": null, "website": "https://www.kbanknow.com", "phone": "1522-1000"},
+        {"name": "토스뱅크", "code": "TOSS", "swift_code": null, "website": "https://www.tossbank.com", "phone": "1661-7654"}
+    ],
+    "US": [
+        {"name": "Bank of America", "code": "BOA", "swift_code": "BOFAUS3N", "website": "https://www.bankofamerica.com", "phone": "+1-800-432-1000"},
+        {"name": "JPMorgan Chase", "code": "CHASE", "swift_code": "CHASUS33", "website": "https://www.chase.com", "phone": "+1-800-935-9935"},
+        {"name": "Wells Fargo", "code": "WF", "swift_code": "WFBIUS6S", "website": "https://www.wellsfargo.com", "phone": "+1-800-869-3557"},
+        {"name": "Citibank", "code": "CITI_US", "swift_code": "CITIUS33", "website": "https://www.citibank.com", "phone": "+1-800-374-9700"}
+    ],
+    "JP": [
+        {"name": "MUFG Bank", "code": "MUFG", "swift_code": "BOTKJPJT", "website": "https://www.bk.mufg.jp", "phone": "+81-3-3240-1111"},
+        {"name": "Mizuho Bank", "code": "MIZUHO", "swift_code": "MHBKJPJT", "website": "https://www.mizuhobank.com", "phone": "+81-3-3596-1111"},
+        {"name": "Sumitomo Mitsui Banking", "code": "SMBC", "swift_code": "SMBCJPJT", "website": "https://www.smbc.co.jp", "phone": "+81-3-3282-8111"}
+    ]
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    const countrySelect = document.getElementById('country');
+    const bankSelect = document.getElementById('bank_select');
+    const customBankCheck = document.getElementById('custom_bank');
+    const nameInput = document.getElementById('name');
+    const codeInput = document.getElementById('code');
+    const swiftCodeInput = document.getElementById('swift_code');
+    const websiteInput = document.getElementById('website');
+    const phoneInput = document.getElementById('phone');
+
+    // 현재 은행 정보
+    const currentBank = {
+        name: '{{ $bank->name }}',
+        code: '{{ $bank->code }}',
+        swift_code: '{{ $bank->swift_code }}',
+        website: '{{ $bank->website }}',
+        phone: '{{ $bank->phone }}'
+    };
+
+    console.log('Current bank:', currentBank);
+
+    // 사용자 정의 은행 체크박스 변경 시
+    customBankCheck.addEventListener('change', function() {
+        const isCustom = this.checked;
+        console.log('Custom bank mode:', isCustom);
+
+        codeInput.readOnly = !isCustom;
+        swiftCodeInput.readOnly = !isCustom;
+        websiteInput.readOnly = !isCustom;
+        phoneInput.readOnly = !isCustom;
+        bankSelect.disabled = isCustom;
+
+        if (isCustom) {
+            // 사용자 정의 모드: 현재 값들을 복원하고 편집 가능하게
+            nameInput.value = currentBank.name;
+            codeInput.value = currentBank.code;
+            swiftCodeInput.value = currentBank.swift_code;
+            websiteInput.value = currentBank.website;
+            phoneInput.value = currentBank.phone;
+
+            // 은행 선택을 비활성화
+            bankSelect.style.opacity = '0.5';
+        } else {
+            // 목록 선택 모드
+            bankSelect.style.opacity = '1';
+        }
+    });
+
+    // 국가 선택 시 은행 목록 로드
+    countrySelect.addEventListener('change', function() {
+        const countryCode = this.value;
+        console.log('Country selected:', countryCode);
+
+        if (!countryCode) {
+            bankSelect.disabled = true;
+            bankSelect.innerHTML = '<option value="">먼저 국가를 선택하세요</option>';
+            return;
+        }
+
+        // 해당 국가의 은행 목록 가져오기
+        const banks = bankData[countryCode] || [];
+        console.log('Banks found:', banks);
+
+        // 은행 선택 옵션 업데이트
+        bankSelect.innerHTML = '<option value="">은행을 선택하세요</option>';
+
+        if (banks.length > 0) {
+            let foundCurrentBank = false;
+
+            banks.forEach(bank => {
+                const option = document.createElement('option');
+                option.value = JSON.stringify(bank);
+                option.textContent = bank.name;
+
+                // 현재 은행과 일치하는지 확인
+                if (bank.name === currentBank.name) {
+                    option.selected = true;
+                    foundCurrentBank = true;
+                }
+
+                bankSelect.appendChild(option);
+            });
+
+            // 현재 은행이 목록에 없으면 사용자 정의 모드로 전환
+            if (!foundCurrentBank) {
+                customBankCheck.checked = true;
+                customBankCheck.dispatchEvent(new Event('change'));
+            }
+
+            bankSelect.disabled = customBankCheck.checked;
+        } else {
+            bankSelect.innerHTML = '<option value="">해당 국가의 은행이 없습니다</option>';
+            // 은행 목록이 없으면 사용자 정의 모드로 전환
+            customBankCheck.checked = true;
+            customBankCheck.dispatchEvent(new Event('change'));
+        }
+    });
+
+    // 은행 선택 시 정보 자동 채우기
+    bankSelect.addEventListener('change', function() {
+        console.log('Bank selected:', this.value);
+
+        if (!this.value || customBankCheck.checked) {
+            return;
+        }
+
+        try {
+            const bank = JSON.parse(this.value);
+            console.log('Parsed bank data:', bank);
+
+            nameInput.value = bank.name || '';
+            codeInput.value = bank.code || '';
+            swiftCodeInput.value = bank.swift_code || '';
+            websiteInput.value = bank.website || '';
+            phoneInput.value = bank.phone || '';
+
+        } catch (error) {
+            console.error('Error parsing bank data:', error);
+        }
+    });
+
+    // 페이지 로드 시 초기화
+    const currentCountry = countrySelect.value;
+    if (currentCountry) {
+        console.log('Initializing with country:', currentCountry);
+        countrySelect.dispatchEvent(new Event('change'));
+    }
+});
 </script>
 @endsection

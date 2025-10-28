@@ -1,0 +1,398 @@
+{
+  "KR": [
+    {
+      "name": "KB국민은행",
+      "code": "KB",
+      "swift_code": "CZNBKRSE",
+      "website": "https://www.kbstar.com",
+      "phone": "1588-9999"
+    },
+    {
+      "name": "신한은행",
+      "code": "SH",
+      "swift_code": "SHBKKRSE",
+      "website": "https://www.shinhan.com",
+      "phone": "1599-8000"
+    },
+    {
+      "name": "우리은행",
+      "code": "WR",
+      "swift_code": "HVBKKRSE",
+      "website": "https://www.wooribank.com",
+      "phone": "1599-5000"
+    },
+    {
+      "name": "하나은행",
+      "code": "HN",
+      "swift_code": "HNBNKRSE",
+      "website": "https://www.kebhana.com",
+      "phone": "1599-1111"
+    },
+    {
+      "name": "기업은행",
+      "code": "IBK",
+      "swift_code": "IBKOKRSE",
+      "website": "https://www.ibk.co.kr",
+      "phone": "1566-2566"
+    },
+    {
+      "name": "NH농협은행",
+      "code": "NH",
+      "swift_code": "NACFKRSE",
+      "website": "https://banking.nonghyup.com",
+      "phone": "1588-2100"
+    },
+    {
+      "name": "수협은행",
+      "code": "SUHYUP",
+      "swift_code": "SHFCKRSE",
+      "website": "https://www.suhyup-bank.com",
+      "phone": "1588-1515"
+    },
+    {
+      "name": "SC제일은행",
+      "code": "SC",
+      "swift_code": "SCBLKRSE",
+      "website": "https://www.scfirstbank.com",
+      "phone": "1588-1599"
+    },
+    {
+      "name": "시티은행",
+      "code": "CITI",
+      "swift_code": "CITIKRSE",
+      "website": "https://www.citibank.co.kr",
+      "phone": "1588-2588"
+    },
+    {
+      "name": "경남은행",
+      "code": "KNB",
+      "swift_code": "KYNBKRSE",
+      "website": "https://www.knbank.co.kr",
+      "phone": "1588-0505"
+    },
+    {
+      "name": "광주은행",
+      "code": "GJB",
+      "swift_code": "GJBKKRSE",
+      "website": "https://www.kjbank.com",
+      "phone": "1588-3388"
+    },
+    {
+      "name": "대구은행",
+      "code": "DGB",
+      "swift_code": "DAEBKRSE",
+      "website": "https://www.dgb.co.kr",
+      "phone": "1566-3737"
+    },
+    {
+      "name": "부산은행",
+      "code": "BNK",
+      "swift_code": "PSBKKRSE",
+      "website": "https://www.busanbank.co.kr",
+      "phone": "1588-6200"
+    },
+    {
+      "name": "전북은행",
+      "code": "JBB",
+      "swift_code": "JBVLKRSE",
+      "website": "https://www.jbbank.co.kr",
+      "phone": "1588-7000"
+    },
+    {
+      "name": "제주은행",
+      "code": "JJB",
+      "swift_code": "JEJUKRSE",
+      "website": "https://www.e-jejubank.com",
+      "phone": "1588-0079"
+    },
+    {
+      "name": "카카오뱅크",
+      "code": "KAKAO",
+      "swift_code": null,
+      "website": "https://www.kakaobank.com",
+      "phone": "1599-3333"
+    },
+    {
+      "name": "케이뱅크",
+      "code": "KBANK",
+      "swift_code": null,
+      "website": "https://www.kbanknow.com",
+      "phone": "1522-1000"
+    },
+    {
+      "name": "토스뱅크",
+      "code": "TOSS",
+      "swift_code": null,
+      "website": "https://www.tossbank.com",
+      "phone": "1661-7654"
+    }
+  ],
+  "US": [
+    {
+      "name": "Bank of America",
+      "code": "BOA",
+      "swift_code": "BOFAUS3N",
+      "website": "https://www.bankofamerica.com",
+      "phone": "+1-800-432-1000"
+    },
+    {
+      "name": "JPMorgan Chase",
+      "code": "CHASE",
+      "swift_code": "CHASUS33",
+      "website": "https://www.chase.com",
+      "phone": "+1-800-935-9935"
+    },
+    {
+      "name": "Wells Fargo",
+      "code": "WF",
+      "swift_code": "WFBIUS6S",
+      "website": "https://www.wellsfargo.com",
+      "phone": "+1-800-869-3557"
+    },
+    {
+      "name": "Citibank",
+      "code": "CITI_US",
+      "swift_code": "CITIUS33",
+      "website": "https://www.citibank.com",
+      "phone": "+1-800-374-9700"
+    }
+  ],
+  "JP": [
+    {
+      "name": "MUFG Bank",
+      "code": "MUFG",
+      "swift_code": "BOTKJPJT",
+      "website": "https://www.bk.mufg.jp",
+      "phone": "+81-3-3240-1111"
+    },
+    {
+      "name": "Mizuho Bank",
+      "code": "MIZUHO",
+      "swift_code": "MHBKJPJT",
+      "website": "https://www.mizuhobank.com",
+      "phone": "+81-3-3596-1111"
+    },
+    {
+      "name": "Sumitomo Mitsui Banking",
+      "code": "SMBC",
+      "swift_code": "SMBCJPJT",
+      "website": "https://www.smbc.co.jp",
+      "phone": "+81-3-3282-8111"
+    }
+  ],
+  "CN": [
+    {
+      "name": "Bank of China",
+      "code": "BOC",
+      "swift_code": "BKCHCNBJ",
+      "website": "https://www.boc.cn",
+      "phone": "+86-95566"
+    },
+    {
+      "name": "Industrial and Commercial Bank of China",
+      "code": "ICBC",
+      "swift_code": "ICBKCNBJ",
+      "website": "https://www.icbc.com.cn",
+      "phone": "+86-95588"
+    },
+    {
+      "name": "China Construction Bank",
+      "code": "CCB",
+      "swift_code": "PCBCCNBJ",
+      "website": "https://www.ccb.com",
+      "phone": "+86-95533"
+    }
+  ],
+  "GB": [
+    {
+      "name": "HSBC",
+      "code": "HSBC",
+      "swift_code": "HBUKGB4B",
+      "website": "https://www.hsbc.com",
+      "phone": "+44-345-740-4404"
+    },
+    {
+      "name": "Standard Chartered",
+      "code": "SCB",
+      "swift_code": "SCBLGB2L",
+      "website": "https://www.sc.com",
+      "phone": "+44-345-600-6161"
+    }
+  ],
+  "DE": [
+    {
+      "name": "Deutsche Bank",
+      "code": "DB",
+      "swift_code": "DEUTDEFF",
+      "website": "https://www.deutsche-bank.de",
+      "phone": "+49-69-910-00"
+    },
+    {
+      "name": "Commerzbank",
+      "code": "CBK",
+      "swift_code": "COBADEFF",
+      "website": "https://www.commerzbank.de",
+      "phone": "+49-69-136-20"
+    }
+  ],
+  "FR": [
+    {
+      "name": "BNP Paribas",
+      "code": "BNP",
+      "swift_code": "BNPAFRPP",
+      "website": "https://www.bnpparibas.com",
+      "phone": "+33-1-40-14-45-46"
+    },
+    {
+      "name": "Société Générale",
+      "code": "SG",
+      "swift_code": "SOGEFRPP",
+      "website": "https://www.societegenerale.com",
+      "phone": "+33-1-42-14-20-00"
+    }
+  ],
+  "CA": [
+    {
+      "name": "Royal Bank of Canada",
+      "code": "RBC",
+      "swift_code": "ROYCCAT2",
+      "website": "https://www.rbc.com",
+      "phone": "+1-800-769-2511"
+    },
+    {
+      "name": "Toronto-Dominion Bank",
+      "code": "TD",
+      "swift_code": "TDOMCATT",
+      "website": "https://www.td.com",
+      "phone": "+1-866-567-8888"
+    }
+  ],
+  "AU": [
+    {
+      "name": "Commonwealth Bank of Australia",
+      "code": "CBA",
+      "swift_code": "CTBAAU2S",
+      "website": "https://www.commbank.com.au",
+      "phone": "+61-13-22-21"
+    },
+    {
+      "name": "Australia and New Zealand Banking Group",
+      "code": "ANZ",
+      "swift_code": "ANZBAU3M",
+      "website": "https://www.anz.com.au",
+      "phone": "+61-13-13-14"
+    }
+  ],
+  "SG": [
+    {
+      "name": "DBS Bank",
+      "code": "DBS",
+      "swift_code": "DBSSSGSG",
+      "website": "https://www.dbs.com.sg",
+      "phone": "+65-6327-2265"
+    },
+    {
+      "name": "Oversea-Chinese Banking Corporation",
+      "code": "OCBC",
+      "swift_code": "OCBCSGSG",
+      "website": "https://www.ocbc.com",
+      "phone": "+65-6363-3333"
+    }
+  ],
+  "HK": [
+    {
+      "name": "Hong Kong and Shanghai Banking Corporation",
+      "code": "HSBC_HK",
+      "swift_code": "HSBCHKHH",
+      "website": "https://www.hsbc.com.hk",
+      "phone": "+852-2233-3000"
+    },
+    {
+      "name": "Standard Chartered Hong Kong",
+      "code": "SCB_HK",
+      "swift_code": "SCBLHKHH",
+      "website": "https://www.sc.com/hk",
+      "phone": "+852-2886-8868"
+    }
+  ],
+  "TH": [
+    {
+      "name": "Bangkok Bank",
+      "code": "BBL",
+      "swift_code": "BKKBTHBK",
+      "website": "https://www.bangkokbank.com",
+      "phone": "+66-2-626-4000"
+    },
+    {
+      "name": "Kasikornbank",
+      "code": "KBANK",
+      "swift_code": "KASITHBK",
+      "website": "https://www.kasikornbank.com",
+      "phone": "+66-2-888-8888"
+    }
+  ],
+  "VN": [
+    {
+      "name": "Vietcombank",
+      "code": "VCB",
+      "swift_code": "BFTVVNVX",
+      "website": "https://www.vietcombank.com.vn",
+      "phone": "+84-24-3936-1600"
+    },
+    {
+      "name": "BIDV",
+      "code": "BIDV",
+      "swift_code": "BIDVVNVX",
+      "website": "https://www.bidv.com.vn",
+      "phone": "+84-24-3974-3979"
+    }
+  ],
+  "ID": [
+    {
+      "name": "Bank Central Asia",
+      "code": "BCA",
+      "swift_code": "CENAIDJA",
+      "website": "https://www.bca.co.id",
+      "phone": "+62-21-2358-8000"
+    },
+    {
+      "name": "Bank Mandiri",
+      "code": "MANDIRI",
+      "swift_code": "BMRIIDJA",
+      "website": "https://www.bankmandiri.co.id",
+      "phone": "+62-21-5299-7777"
+    }
+  ],
+  "MY": [
+    {
+      "name": "Malayan Banking Berhad",
+      "code": "MAYBANK",
+      "swift_code": "MBBEMYKL",
+      "website": "https://www.maybank.com.my",
+      "phone": "+60-3-2070-8833"
+    },
+    {
+      "name": "CIMB Bank",
+      "code": "CIMB",
+      "swift_code": "CIBBMYKL",
+      "website": "https://www.cimb.com.my",
+      "phone": "+60-3-6204-7788"
+    }
+  ],
+  "PH": [
+    {
+      "name": "Banco de Oro",
+      "code": "BDO",
+      "swift_code": "BNORPHMM",
+      "website": "https://www.bdo.com.ph",
+      "phone": "+63-2-8840-7000"
+    },
+    {
+      "name": "Metropolitan Bank & Trust Company",
+      "code": "METROBANK",
+      "swift_code": "MBTCPHMM",
+      "website": "https://www.metrobank.com.ph",
+      "phone": "+63-2-8700-7777"
+    }
+  ]
+}

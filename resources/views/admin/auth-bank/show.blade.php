@@ -177,6 +177,54 @@
                 </div>
             </div>
 
+            <!-- 계좌 정보 섹션 -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">
+                        <i class="fe fe-credit-card me-2"></i>계좌 정보
+                    </h4>
+                </div>
+                <div class="card-body">
+                    @if($bank->account_number || $bank->account_holder)
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="border rounded p-3">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fe fe-hash me-2 text-muted"></i>
+                                        <strong>계좌번호</strong>
+                                    </div>
+                                    @if($bank->account_number)
+                                        <code class="fs-6">{{ $bank->account_number }}</code>
+                                    @else
+                                        <span class="text-muted">설정되지 않음</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="border rounded p-3">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fe fe-user me-2 text-muted"></i>
+                                        <strong>예금주</strong>
+                                    </div>
+                                    @if($bank->account_holder)
+                                        <span class="fs-6">{{ $bank->account_holder }}</span>
+                                    @else
+                                        <span class="text-muted">설정되지 않음</span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <div class="text-center py-4">
+                            <i class="fe fe-credit-card text-muted mb-3" style="font-size: 3rem;"></i>
+                            <p class="text-muted mb-0">계좌 정보가 등록되지 않았습니다.</p>
+                            <small class="text-muted">은행 수정에서 계좌번호와 예금주 정보를 추가할 수 있습니다.</small>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
             @if($bank->description)
                 <!-- 설명 섹션 -->
                 <div class="card mb-4">
@@ -261,7 +309,7 @@
             @endif
 
             <!-- 빠른 액션 -->
-            {{-- <div class="card mb-4">
+            <div class="card mb-4">
                 <div class="card-header">
                     <h5 class="card-title mb-0">
                         <i class="fe fe-zap me-2"></i>빠른 액션
@@ -275,16 +323,64 @@
                         <a href="{{ route('admin.auth.bank.create') }}" class="btn btn-outline-primary btn-sm">
                             <i class="fe fe-plus me-2"></i>새 은행 추가
                         </a>
+                        <a href="{{ route('admin.auth.bank.index') }}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fe fe-list me-2"></i>은행 목록으로
+                        </a>
                         <hr class="my-2">
                         <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteBank({{ $bank->id }}, '{{ $bank->name }}')">
                             <i class="fe fe-trash me-2"></i>은행 삭제
                         </button>
                     </div>
                 </div>
-            </div> --}}
+            </div>
+
+            <!-- 도움말 -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fe fe-help-circle me-2"></i>은행 정보 도움말
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="small">
+                        <div class="mb-3">
+                            <h6 class="text-primary mb-2">
+                                <i class="fe fe-info me-1"></i>기본 정보:
+                            </h6>
+                            <ul class="text-muted list-unstyled">
+                                <li class="mb-1">• <strong>은행 코드</strong>: 시스템 내부 식별용</li>
+                                <li class="mb-1">• <strong>SWIFT 코드</strong>: 국제 송금 시 사용</li>
+                                <li class="mb-1">• <strong>정렬 순서</strong>: 목록 표시 순서</li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-3">
+                            <h6 class="text-success mb-2">
+                                <i class="fe fe-credit-card me-1"></i>계좌 정보:
+                            </h6>
+                            <ul class="text-muted list-unstyled">
+                                <li class="mb-1">• <strong>계좌번호</strong>: 실제 계좌 번호</li>
+                                <li class="mb-1">• <strong>예금주</strong>: 계좌 소유자 명</li>
+                                <li class="mb-1">• 결제 시 표시되는 정보입니다</li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-0">
+                            <h6 class="text-warning mb-2">
+                                <i class="fe fe-alert-triangle me-1"></i>주의사항:
+                            </h6>
+                            <ul class="text-muted list-unstyled">
+                                <li class="mb-1">• 계좌 정보는 민감한 정보입니다</li>
+                                <li class="mb-1">• 비활성화하면 사용자에게 표시되지 않습니다</li>
+                                <li class="mb-1">• 삭제 시 관련 데이터가 모두 제거됩니다</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- 시스템 정보 -->
-            {{-- <div class="card">
+            <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">
                         <i class="fe fe-database me-2"></i>시스템 정보
@@ -294,23 +390,25 @@
                     <div class="row g-3">
                         <div class="col-12">
                             <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
-                                <span class="text-muted">데이터베이스 ID</span>
+                                <span class="text-muted">ID</span>
                                 <code class="small">{{ $bank->id }}</code>
                             </div>
                         </div>
-                        @if($bank->uuid)
                         <div class="col-12">
                             <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
-                                <span class="text-muted">UUID</span>
-                                <code class="small">{{ substr($bank->uuid, 0, 8) }}...</code>
+                                <span class="text-muted">상태</span>
+                                @if($bank->enable)
+                                    <span class="badge bg-success">활성</span>
+                                @else
+                                    <span class="badge bg-secondary">비활성</span>
+                                @endif
                             </div>
                         </div>
-                        @endif
                         <div class="col-12">
                             <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
-                                <span class="text-muted">생성일</span>
+                                <span class="text-muted">등록일</span>
                                 <div class="text-end">
-                                    <div class="small">{{ $bank->created_at->format('Y-m-d') }}</div>
+                                    <div class="small">{{ $bank->created_at->format('Y-m-d H:i') }}</div>
                                     <div class="text-muted small">{{ $bank->created_at->diffForHumans() }}</div>
                                 </div>
                             </div>
@@ -319,14 +417,14 @@
                             <div class="d-flex justify-content-between align-items-center py-2">
                                 <span class="text-muted">최종 수정</span>
                                 <div class="text-end">
-                                    <div class="small">{{ $bank->updated_at->format('Y-m-d') }}</div>
+                                    <div class="small">{{ $bank->updated_at->format('Y-m-d H:i') }}</div>
                                     <div class="text-muted small">{{ $bank->updated_at->diffForHumans() }}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
     </div>
 </div>

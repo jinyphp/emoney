@@ -53,8 +53,14 @@ Route::middleware(['web', 'admin'])->prefix('admin/auth')->group(function () {
         Route::delete('/{id}', [DeleteController::class, 'destroy'])->name('admin.auth.emoney.destroy');
 
         // 입출금 내역
-        Route::get('/deposits', [DepositsController::class, 'index'])->name('admin.auth.emoney.deposits');
-        Route::get('/withdrawals', [WithdrawalsController::class, 'index'])->name('admin.auth.emoney.withdrawals');
+        Route::get('/deposits', [DepositsController::class, 'index'])->name('admin.auth.emoney.deposits.index');
+        Route::get('/withdrawals', [WithdrawalsController::class, 'index'])->name('admin.auth.emoney.withdrawals.index');
+
+        // 설정 관리
+        Route::get('/setting', [\Jiny\Emoney\Http\Controllers\Admin\Setting\IndexController::class, 'index'])->name('admin.auth.emoney.setting.index');
+        Route::post('/setting', [\Jiny\Emoney\Http\Controllers\Admin\Setting\IndexController::class, 'store'])->name('admin.auth.emoney.setting.store');
+        Route::post('/setting/reset', [\Jiny\Emoney\Http\Controllers\Admin\Setting\IndexController::class, 'reset'])->name('admin.auth.emoney.setting.reset');
+        Route::get('/setting/backup', [\Jiny\Emoney\Http\Controllers\Admin\Setting\IndexController::class, 'backup'])->name('admin.auth.emoney.setting.backup');
     });
 
     // Point 관리
@@ -75,14 +81,18 @@ Route::middleware(['web', 'admin'])->prefix('admin/auth')->group(function () {
 
     // 은행 관리
     Route::prefix('bank')->group(function () {
+        // API 라우트를 먼저 정의 (라우트 충돌 방지)
+        Route::get('/api/banks/{countryCode}', [AuthBankCreateController::class, 'getBanksByCountry'])->name('admin.auth.bank.api.banks');
+        Route::get('/api/edit/banks/{countryCode}', [AuthBankEditController::class, 'getBanksByCountry'])->name('admin.auth.bank.api.edit.banks');
+
         Route::get('/', [AuthBankIndexController::class, 'index'])->name('admin.auth.bank.index');
         Route::get('/create', [AuthBankCreateController::class, 'create'])->name('admin.auth.bank.create');
         Route::post('/', [AuthBankStoreController::class, 'store'])->name('admin.auth.bank.store');
+        Route::get('/export', [AuthBankExportController::class, 'export'])->name('admin.auth.bank.export');
         Route::get('/{id}', [AuthBankShowController::class, 'show'])->name('admin.auth.bank.show');
         Route::get('/{id}/edit', [AuthBankEditController::class, 'edit'])->name('admin.auth.bank.edit');
         Route::put('/{id}', [AuthBankUpdateController::class, 'update'])->name('admin.auth.bank.update');
         Route::delete('/{id}', [AuthBankDestroyController::class, 'destroy'])->name('admin.auth.bank.destroy');
-        Route::get('/export', [AuthBankExportController::class, 'export'])->name('admin.auth.bank.export');
     });
 
     // 사용자 은행계좌 관리

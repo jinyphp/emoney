@@ -95,12 +95,12 @@
         "title": "입금 내역",
         "subtitle": "이머니 입금 목록",
         "view": "jiny-emoney::admin.emoney.deposits",
-        "route": "admin.auth.emoney.deposits"
+        "route": "admin.auth.emoney.deposits.index"
     },
     "withdrawals": {
         "title": "출금 내역",
         "subtitle": "이머니 출금 목록",
         "view": "jiny-emoney::admin.emoney.withdrawals",
-        "route": "admin.auth.emoney.withdrawals"
+        "route": "admin.auth.emoney.withdrawals.index"
     }
 }

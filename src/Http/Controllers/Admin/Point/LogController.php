@@ -84,7 +84,7 @@ class LogController extends Controller
                                   ->limit(10)
                                   ->get(),
             'daily_stats' => UserPointLog::select(
-                                DB::raw('DATE(created_at) as date'),
+                                DB::raw('date(created_at) as date'),
                                 DB::raw('count(*) as count'),
                                 DB::raw('SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) as total_earned'),
                                 DB::raw('SUM(CASE WHEN amount < 0 THEN ABS(amount) ELSE 0 END) as total_used')
@@ -103,7 +103,7 @@ class LogController extends Controller
             ],
         ];
 
-        return view('jiny-emoney::point.log', [
+        return view('jiny-emoney::admin.point-log.index', [
             'logs' => $logs,
             'statistics' => $statistics,
             'request' => $request,

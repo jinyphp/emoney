@@ -19,6 +19,8 @@ class AuthBank extends Model
         'logo',
         'website',
         'phone',
+        'account_number',
+        'account_holder',
         'description',
         'enable',
         'sort_order'

@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('logo')->nullable()->comment('은행 로고 경로');
             $table->string('website')->nullable()->comment('은행 웹사이트');
             $table->string('phone')->nullable()->comment('고객센터 전화번호');
+            $table->string('account_number')->nullable()->comment('계좌번호');
+            $table->string('account_holder')->nullable()->comment('예금주');
             $table->text('description')->nullable()->comment('은행 설명');
             $table->boolean('enable')->default(true)->comment('활성화 여부');
             $table->integer('sort_order')->default(0)->comment('정렬 순서');

@@ -1,0 +1,10 @@
+{
+    "emoney":{
+        "enable":true,
+        "register":1000
+    },
+    "point":{
+        "enable":true,
+        "register":1000
+    }
+}
