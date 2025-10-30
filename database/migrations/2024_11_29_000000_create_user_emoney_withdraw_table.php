@@ -70,9 +70,9 @@ return new class extends Migration
                   ->comment('출금 상태');
 
             // 인덱스
-            $table->index(['user_uuid', 'status'], 'idx_user_status');
-            $table->index(['status', 'created_at'], 'idx_status_created');
-            $table->index('amount', 'idx_amount');
+            $table->index(['user_uuid', 'status'], 'idx_withdraw_user_status');
+            $table->index(['status', 'created_at'], 'idx_withdraw_status_created');
+            $table->index('amount', 'idx_withdraw_amount');
 
             // 외래키 (선택사항)
             // $table->foreign('bank_id')->references('id')->on('auth_banks')->nullOnDelete();

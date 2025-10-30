@@ -86,9 +86,9 @@ return new class extends Migration
                   ->comment('충전 상태');
 
             // 성능 최적화 인덱스
-            $table->index(['user_uuid', 'status'], 'idx_user_status');
-            $table->index(['status', 'created_at'], 'idx_status_created');
-            $table->index('amount', 'idx_amount');
+            $table->index(['user_uuid', 'status'], 'idx_deposit_user_status');
+            $table->index(['status', 'created_at'], 'idx_deposit_status_created');
+            $table->index('amount', 'idx_deposit_amount');
             $table->index('cancelled_at', 'idx_cancelled_at');
             $table->index('refunded_at', 'idx_refunded_at');
             $table->index(['status', 'cancelled_at'], 'idx_status_cancelled');

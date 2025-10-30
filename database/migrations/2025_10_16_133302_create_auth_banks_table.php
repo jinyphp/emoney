@@ -64,7 +64,7 @@ return new class extends Migration
             ['name' => 'NH농협은행', 'code' => 'NH', 'country' => 'KR', 'swift_code' => 'NACFKRSE', 'website' => 'https://banking.nonghyup.com', 'phone' => '1588-2100', 'sort_order' => 6],
             ['name' => '수협은행', 'code' => 'SUHYUP', 'country' => 'KR', 'swift_code' => 'SHFCKRSE', 'website' => 'https://www.suhyup-bank.com', 'phone' => '1588-1515', 'sort_order' => 7],
             ['name' => 'SC제일은행', 'code' => 'SC', 'country' => 'KR', 'swift_code' => 'SCBLKRSE', 'website' => 'https://www.scfirstbank.com', 'phone' => '1588-1599', 'sort_order' => 8],
-            ['name' => '시티은행', 'code' => 'CITI', 'country' => 'KR', 'swift_code' => 'CITIKRSE', 'website' => 'https://www.citibank.co.kr', 'phone' => '1588-2588', 'sort_order' => 9],
+            ['name' => '시티은행', 'code' => 'CITI_KR', 'country' => 'KR', 'swift_code' => 'CITIKRSE', 'website' => 'https://www.citibank.co.kr', 'phone' => '1588-2588', 'sort_order' => 9],
             ['name' => '경남은행', 'code' => 'KNB', 'country' => 'KR', 'swift_code' => 'KYNBKRSE', 'website' => 'https://www.knbank.co.kr', 'phone' => '1588-0505', 'sort_order' => 10],
             ['name' => '광주은행', 'code' => 'GJB', 'country' => 'KR', 'swift_code' => 'GJBKKRSE', 'website' => 'https://www.kjbank.com', 'phone' => '1588-3388', 'sort_order' => 11],
             ['name' => '대구은행', 'code' => 'DGB', 'country' => 'KR', 'swift_code' => 'DAEBKRSE', 'website' => 'https://www.dgb.co.kr', 'phone' => '1566-3737', 'sort_order' => 12],

@@ -81,10 +81,10 @@ return new class extends Migration
             $table->unsignedBigInteger('admin_id')->nullable()->comment('처리한 관리자 ID');
 
             // 인덱스
-            $table->index(['user_uuid', 'type'], 'idx_user_type');
-            $table->index(['type', 'created_at'], 'idx_type_created');
-            $table->index(['reference_table', 'reference_id'], 'idx_reference');
-            $table->index('amount', 'idx_amount');
+            $table->index(['user_uuid', 'type'], 'idx_log_user_type');
+            $table->index(['type', 'created_at'], 'idx_log_type_created');
+            $table->index(['reference_table', 'reference_id'], 'idx_log_reference');
+            $table->index('amount', 'idx_log_amount');
         });
     }
 

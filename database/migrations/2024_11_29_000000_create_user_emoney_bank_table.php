@@ -73,7 +73,7 @@ return new class extends Migration
 
             // 인덱스
             $table->index(['user_uuid', 'is_default'], 'idx_user_default');
-            $table->index(['user_uuid', 'type'], 'idx_user_type');
+            $table->index(['user_uuid', 'type'], 'idx_bank_user_type');
             $table->index(['status', 'is_enabled'], 'idx_status_enabled');
             $table->unique(['user_uuid', 'account_number'], 'unique_user_account');
 

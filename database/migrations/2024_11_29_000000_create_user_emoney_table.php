@@ -52,9 +52,9 @@ return new class extends Migration
                   ->comment('계정 상태');
 
             // 성능 최적화 인덱스
-            $table->index(['status', 'created_at'], 'idx_status_created');
-            $table->index('balance', 'idx_balance');
-            $table->index(['shard_id', 'status'], 'idx_shard_status');
+            $table->index(['status', 'created_at'], 'idx_emoney_status_created');
+            $table->index('balance', 'idx_emoney_balance');
+            $table->index(['shard_id', 'status'], 'idx_emoney_shard_status');
         });
     }
 

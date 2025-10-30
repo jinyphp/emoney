@@ -78,7 +78,7 @@ return new class extends Migration
                   ->comment('거래 상태');
 
             // 성능 최적화 인덱스
-            $table->index(['user_uuid', 'transaction_type'], 'idx_user_type');
+            $table->index(['user_uuid', 'transaction_type'], 'idx_point_log_user_type');
             $table->index(['transaction_type', 'created_at'], 'idx_type_created');
             $table->index(['reference_type', 'reference_id'], 'idx_reference');
             $table->index('expires_at', 'idx_expires');

@@ -60,7 +60,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable()->comment('사용자 ID (레거시)');
 
             // 성능 최적화 인덱스
-            $table->index(['status', 'created_at'], 'idx_status_created');
+            $table->index(['status', 'created_at'], 'idx_point_status_created');
             $table->index('balance', 'idx_balance');
             $table->index(['shard_id', 'status'], 'idx_shard_status');
             $table->index('next_expiry_date', 'idx_expiry_date');
